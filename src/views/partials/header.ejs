@@ -8,32 +8,59 @@
         <%= title %>
     </title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <%- renderStyles() %>
-    <%- renderScripts() %>
-    <% if (NODE_ENV.includes('dev')) { %>
-        <script>
-            // Get the current hostname and port from the browser
-            const host = window.location.hostname;
-            const currentPort = window.location.port;
+        <%- renderScripts() %>
+            <% if (NODE_ENV.includes('dev')) { %>
+                <script>
+                    // Get the current hostname and port from the browser
+                    const host = window.location.hostname;
+                    const currentPort = window.location.port;
 
-            // Calculate WebSocket port (current port + 1)
-            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
+                    // Calculate WebSocket port (current port + 1)
+                    const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
 
-            // Create WebSocket connection using dynamic hostname and port
-            const ws = new WebSocket(`ws://${host}:${wsPort}`);
-            ws.onclose = () => {
-                setTimeout(() => location.reload(), 2000);
-            };
-        </script>
-        <% } %>
+                    // Create WebSocket connection using dynamic hostname and port
+                    const ws = new WebSocket(`ws://${host}:${wsPort}`);
+                    ws.onclose = () => {
+                        setTimeout(() => location.reload(), 2000);
+                    };
+                </script>
+                <% } %>
 </head>
 
 <body class="<%= bodyClass %>">
     <header>
-        <nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">job-application-tracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Register</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
             <ul>
-                <!-- Always visible links -->
-                <li><a href="/">Home</a></li>
 
                 <!-- Only visible when logged in -->
                 <!-- <% if (isLoggedIn) { %>
@@ -53,19 +80,17 @@
         <div class="greeting"> <%- greeting %> </div>
     </header>
 
-<% 
-    const messages = flash();
-    const hasMessages = Object.values(messages).some(arr => arr.length > 0);
-%>
+    <% const messages=flash(); const hasMessages=Object.values(messages).some(arr=> arr.length > 0);
+        %>
 
-<% if (hasMessages) { %>
-    <div class="flash-messages">
-        <% Object.keys(messages).forEach(type => { %>
-            <% messages[type].forEach(message => { %>
-                <div class="flash <%= type %>">
-                    <%= message %>
-                </div>
-            <% }); %>
-        <% }); %>
-    </div>
-<% } %>
+        <% if (hasMessages) { %>
+            <div class="flash-messages">
+                <% Object.keys(messages).forEach(type=> { %>
+                    <% messages[type].forEach(message=> { %>
+                        <div class="flash <%= type %>">
+                            <%= message %>
+                        </div>
+                        <% }); %>
+                            <% }); %>
+            </div>
+            <% } %>
