@@ -1,17 +1,17 @@
 html, body {
-    background-color: lightblue;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+    height: 100%;
 }
 
-body {    
-    .art-source {
-        font-size: x-small;
-    }
-
+body {
     .error-img {
         max-width: 400px;
+    }
+
+    main {
+        background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzI0OTI2NDR8&ixlib=rb-4.1.0&q=85');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 }
 
