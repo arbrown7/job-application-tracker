@@ -28,35 +28,35 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Initialize PostgreSQL session store
-//const pgSession = connectPgSimple(session);
+const pgSession = connectPgSimple(session);
 
 // Configure session middleware
-// app.use(session({
-//     store: new pgSession({
-//         conObject: {
-//             connectionString: process.env.DB_URL,
-//             // Configure SSL for session store connection (required by BYU-I databases)
-//             ssl: {
-//                 ca: caCert,
-//                 rejectUnauthorized: true,
-//                 checkServerIdentity: () => { return undefined; }
-//             }
-//         },
-//         tableName: 'session',
-//         createTableIfMissing: true
-//     }),
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//         secure: NODE_ENV.includes('dev') !== true,
-//         httpOnly: true,
-//         maxAge: 24 * 60 * 60 * 1000
-//     }
-// }));
+app.use(session({
+    store: new pgSession({
+        conObject: {
+            connectionString: process.env.DB_URL,
+            // Configure SSL for session store connection (required by BYU-I databases)
+            ssl: {
+                ca: caCert,
+                rejectUnauthorized: true,
+                checkServerIdentity: () => { return undefined; }
+            }
+        },
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: NODE_ENV.includes('dev') !== true,
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
 
 // Start automatic session cleanup
-//startSessionCleanup();
+startSessionCleanup();
 
 /**
  * Configure Express

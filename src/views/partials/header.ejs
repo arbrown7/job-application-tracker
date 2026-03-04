@@ -43,41 +43,27 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#">Logout</a>
-                    </li>
+                    <!-- Only visible when NOT logged in -->
+                    <% if (!isLoggedIn) { %>
+                        <li class="nav-link">
+                            <a href="/login">Login</a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="/register">Register</a>
+                        </li>
+                    <% } %>
+                    <!-- Only visible when logged in -->
+                    <% if (isLoggedIn) { %>
+                        <li class="nav-link">
+                            <a href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="/logout">Logout</a>
+                        </li>
+                    <% } %>
                 </ul>
             </div>
-            <ul>
-
-                <!-- Only visible when logged in -->
-                <!-- <% if (isLoggedIn) { %>
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="/register/list">All Users</a></li>
-                    <li><a href="/contact/responses">Contact Responses</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                <% } %> -->
-
-                <!-- Only visible when NOT logged in -->
-                <!-- <% if (!isLoggedIn) { %>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                <% } %> -->
-            </ul>
         </nav>
-        <div class="greeting"> <%- greeting %> </div>
     </header>
 
     <% const messages=flash(); const hasMessages=Object.values(messages).some(arr=> arr.length > 0);
