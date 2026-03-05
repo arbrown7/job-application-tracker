@@ -1,0 +1,65 @@
+<%- include('../../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    <p>
+        Register for a new account by providing your information below. All fields are required and passwords must meet security requirements.
+    </p>
+
+    <form method="POST" action="/register" class="registration-form">
+        <div class="form-group">
+            <label for="name">First Name</label>
+            <input type="text" id="firstName" name="firstName"
+             minlength="2" required
+             placeholder="Your first name">
+            <label for="name">Last Name</label>
+            <input type="text" id="lastName" name="lastName"
+             minlength="2" required
+             placeholder="Your last name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" 
+            placeholder="Email address" required>
+        </div>
+
+        <div class="form-group">
+            <label for="emailConfirm">Confirm Email</label>
+            <input type="emailConfirm" id="emailConfirm" name="emailConfirm" 
+            placeholder="Confirm email address" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+             <input type="password" name="password" id="password"
+             minlength="8" pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" 
+             placeholder="Password" required>
+             <div class="help-text">
+                <p>Your password must contain:</p>
+                <ul>
+                    <li>At least 8 characters</li>
+                    <li>1 number</li>
+                    <li>1 special character (! @ # $ % ^ & *)</li>
+                </ul>
+             </div>
+        </div>
+        <div class="form-group">
+            <label for="passwordConfirm">Confirm Password</label>
+            <input type="password" minlength="8"
+            name="passwordConfirm" id="passwordConfirm"
+            pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" 
+            placeholder="Confirm password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option value="jobSeeker">Job Seeker</option>
+                <option value="supporter">Supporter</option>
+            </select>
+        </div>
+
+        <button type="submit">Create Account</button>
+    </form>
+</main>
+<%- include('../../partials/footer') %>

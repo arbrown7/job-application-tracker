@@ -22,7 +22,13 @@ const loginValidation = [
  * Validation rules for editing user accounts
  */
 const updateAccountValidation = [
-    body('name')
+    body('firstName')
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Name must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
+    body('lastName')
         .trim()
         .isLength({ min: 2, max: 100 })
         .withMessage('Name must be between 2 and 100 characters')
@@ -41,7 +47,13 @@ const updateAccountValidation = [
  * Validation rules for user registration
  */
 const registrationValidation = [
-    body('name')
+    body('firstName')
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Name must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
+    body('lastName')
         .trim()
         .isLength({ min: 2, max: 100 })
         .withMessage('Name must be between 2 and 100 characters')

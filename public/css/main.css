@@ -7,7 +7,7 @@ body {
         max-width: 400px;
     }
 
-    main {
+    .cover-container {
         background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzI0OTI2NDR8&ixlib=rb-4.1.0&q=85');
         background-size: cover;
         background-position: center;
