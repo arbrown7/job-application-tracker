@@ -41,7 +41,7 @@ const saveUser = async (first_name, last_name, email, hashedPassword, role) => {
  */
 const getAllUsers = async () => {
     const query = `
-        SELECT id, first_name, last_name, email, created_at
+        SELECT user_id, first_name, last_name, email, created_at
         FROM users
         ORDER BY created_at DESC
     `;
@@ -76,7 +76,7 @@ const updateUser = async (id, first_name, last_name, email) => {
     const query = `
         UPDATE users 
         SET first_name = $1, last_name = $2, email = $3, updated_at = CURRENT_TIMESTAMP
-        WHERE id = $4
+        WHERE user_id = $4
         RETURNING user_id, first_name, last_name, email, updated_at
     `;
     const result = await db.query(query, [first_name, last_name, email, id]);

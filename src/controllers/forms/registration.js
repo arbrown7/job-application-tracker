@@ -104,7 +104,7 @@ const showEditAccountForm = async (req, res) => {
     }
 
     // Check permissions: users can edit themselves, admins can edit anyone
-    const canEdit = currentUser.id === targetUserId || currentUser.roleName === 'admin';
+    const canEdit = currentUser.user_id === targetUserId || currentUser.roleName === 'admin';
 
     if (!canEdit) {
         req.flash('error', 'You do not have permission to edit this account.');
@@ -132,7 +132,7 @@ const processEditAccount = async (req, res) => {
 
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
-    const { first_name, last_name, email } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     try {
         const targetUser = await getUserById(targetUserId);
@@ -143,7 +143,7 @@ const processEditAccount = async (req, res) => {
         }
 
         // Check permissions
-        const canEdit = currentUser.id === targetUserId || currentUser.roleName === 'admin';
+        const canEdit = currentUser.user_id === targetUserId || currentUser.roleName === 'admin';
 
         if (!canEdit) {
             req.flash('error', 'You do not have permission to edit this account.');
@@ -158,12 +158,12 @@ const processEditAccount = async (req, res) => {
         }
 
         // Update the user
-        await updateUser(targetUserId, first_name, last_name, email);
+        await updateUser(targetUserId, firstName, lastName, email);
 
         // If user edited their own account, update session
-        if (currentUser.id === targetUserId) {
-            req.session.user.first_name = first_name;
-            req.session.user.last_name = last_name;
+        if (currentUser.user_id === targetUserId) {
+            req.session.user.first_name = firstName;
+            req.session.user.last_name = lastName;
             req.session.user.email = email;
         }
 
@@ -191,7 +191,7 @@ const processDeleteAccount = async (req, res) => {
     }
 
     // Prevent admins from deleting their own account
-    if (currentUser.id === targetUserId) {
+    if (currentUser.user_id === targetUserId) {
         req.flash('error', 'You cannot delete your own account.');
         return res.redirect('/register/list');
     }

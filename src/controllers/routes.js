@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
-import { requireLogin } from '../middleware/auth.js';
+import { requireLogin, requireRole } from '../middleware/auth.js';
 import { 
     processLogout, 
     showDashboard, 
@@ -51,8 +51,8 @@ router.get('/logout', processLogout);
 router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidation, processRegistration);
 router.get('/register/list', showAllUsers);
-router.get('/register/:id/edit', requireLogin, showEditAccountForm);
-router.post('/register/:id/edit', requireLogin, updateAccountValidation, processEditAccount);
-router.post('/register/:id/delete', requireLogin, processDeleteAccount);
+router.get('/register/:id/edit', requireRole('admin'), showEditAccountForm);
+router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation, processEditAccount);
+router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 export default router;

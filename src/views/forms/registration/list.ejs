@@ -13,8 +13,8 @@
                         `listUser` = user being rendered in this loop
                     */
                     const currentUser = (typeof isLoggedIn !== "undefined" && isLoggedIn) ? user : null;
-                    const canEdit = currentUser && (currentUser.id === listUser.id || currentUser.roleName === "admin");
-                    const canDelete = currentUser && currentUser.roleName === "admin" && currentUser.id !== listUser.id;
+                    const canEdit = currentUser && (currentUser.user_id === listUser.user_id || currentUser.roleName === "admin");
+                    const canDelete = currentUser && currentUser.roleName === "admin" && currentUser.user_id !== listUser.user_id;
                 %>
                         <div class="user-card">
                             <h3>
@@ -27,11 +27,11 @@
                             <% if (canEdit || canDelete) { %>
                                 <div class="user-actions">
                                     <% if (canEdit) { %>
-                                        <a href="/register/<%= listUser.id %>/edit">Edit</a>
+                                        <a href="/register/<%= listUser.user_id %>/edit">Edit</a>
                                         <% } %>
 
                                             <% if (canDelete) { %>
-                                                <form method="POST" action="/register/<%= listUser.id %>/delete"
+                                                <form method="POST" action="/register/<%= listUser.user_id %>/delete"
                                                     style="display: inline;">
                                                     <button type="submit"
                                                         onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
