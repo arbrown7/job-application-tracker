@@ -45,26 +45,26 @@
                     </li>
                     <!-- Only visible when NOT logged in -->
                     <% if (!isLoggedIn) { %>
-                        <li class="nav-link">
-                            <a href="/login">Login</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
                         </li>
-                        <li class="nav-link">
-                            <a href="/register">Register</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
                         </li>
                     <% } %>
                     <!-- Only visible when logged in -->
                     <% if (isLoggedIn) { %>
-                        <li class="nav-link">
-                            <a href="/dashboard">Dashboard</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Dashboard</a>
                         </li>
-                        <li class="nav-link">
-                            <a href="/logout">Logout</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     <% } %>
                     <!-- Only visible when admin -->
                     <% if (isAdmin) { %>
-                        <li class="nav-link">
-                            <a href="/register/list">Admin</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register/list">Admin</a>
                         </li>
                     <% } %>
                 </ul>
