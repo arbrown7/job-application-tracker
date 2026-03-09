@@ -20,6 +20,11 @@ import {
     processEditAccount,
     processDeleteAccount
 } from './forms/registration.js';
+import { jobsPage } from './jobs/jobs.js';
+import { 
+    showNewJobForm,
+    processNewJob
+} from './forms/jobs.js';
 
 const router = Router();
 
@@ -56,9 +61,9 @@ router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation,
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes
-//router.get('/jobs'); //list current user’s jobs
-//router.get('/jobs/new'); //show add-job form
-//router.post('/jobs'); //create a new job
+//router.get('/jobs', jobsPage); //list current user’s jobs
+router.get('/jobs/new', showNewJobForm);
+//router.post('/jobs/new', jobValidation, processNewJob); //create a new job
 //router.get('/jobs/:id'); //show one job
 //router.get('/jobs/:id/edit'); //show edit form
 //router.post('/jobs/:id/edit'); //update job

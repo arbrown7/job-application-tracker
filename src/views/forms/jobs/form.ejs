@@ -13,20 +13,6 @@
                                     Add a new job application you would like to track the status of. Fields marked with
                                     * are required.
                                 </p>
-                                <!-- fields we need
-                                
-                                title* - text
-                                url* - text
-                                company - text
-                                location - text
-                                contact Name - text
-                                contact email - text
-                                source - text
-                                category - text
-                                salary min - integer
-                                salary max - integer
-                                type* - dropdown
-                                posted date - date -->
 
                                 <form method="POST" action="/jobs" class="vstack gap-3">
                                     <div class="form-group">
@@ -42,47 +28,101 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="form-label mt-3" for="email">Email</label>
-                                        <input type="email" id="email" name="email" placeholder="Email address"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label mt-3" for="emailConfirm">Confirm Email</label>
-                                        <input type="emailConfirm" id="emailConfirm" name="emailConfirm"
-                                            placeholder="Confirm email address" class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label mt-3" for="password">Password</label>
-                                        <input type="password" name="password" id="password" minlength="8"
-                                            pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" placeholder="Password" required
+                                        <label class="form-label mt-3" for="city">City</label>
+                                        <input type="text" id="city" name="city" placeholder="City"
                                             class="form-control">
-                                        <div class="help-text">
-                                            <p>Your password must contain:</p>
-                                            <ul>
-                                                <li>At least 8 characters</li>
-                                                <li>1 number</li>
-                                                <li>1 special character (! @ # $ % ^ & *)</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label mt-3" for="passwordConfirm">Confirm Password</label>
-                                        <input type="password" minlength="8" name="passwordConfirm" id="passwordConfirm"
-                                            pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" placeholder="Confirm password"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label mt-3" for="role">Role</label>
-                                        <select id="role" name="role">
-                                            <option value="jobSeeker">Job Seeker</option>
-                                            <option value="supporter">Supporter</option>
+                                        <label class="form-label mt-3" for="state">State</label>
+                                        <select type="text" id="state" name="state" class="form-control">
+                                            <option value="">Select a State</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AK">AK</option>
+                                            <option value="AR">AR</option>
+                                            <option value="AZ">AZ</option>
+                                            <option value="CA">CA</option>
+                                            <option value="CO">CO</option>
+                                            <option value="CT">CT</option>
+                                            <option value="DC">DC</option>
+                                            <option value="DE">DE</option>
+                                            <option value="FL">FL</option>
+                                            <option value="GA">GA</option>
+                                            <option value="HI">HI</option>
+                                            <option value="IA">IA</option>
+                                            <option value="ID">ID</option>
+                                            <option value="IL">IL</option>
+                                            <option value="IN">IN</option>
+                                            <option value="KS">KS</option>
+                                            <option value="KY">KY</option>
+                                            <option value="LA">LA</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MD">MD</option>
+                                            <option value="ME">ME</option>
+                                            <option value="MI">MI</option>
+                                            <option value="MN">MN</option>
+                                            <option value="MO">MO</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MT">MT</option>
+                                            <option value="NC">NC</option>
+                                            <option value="NE">NE</option>
+                                            <option value="NH">NH</option>
+                                            <option value="NJ">NJ</option>
+                                            <option value="NM">NM</option>
+                                            <option value="NV">NV</option>
+                                            <option value="NY">NY</option>
+                                            <option value="ND">ND</option>
+                                            <option value="OH">OH</option>
+                                            <option value="OK">OK</option>
+                                            <option value="OR">OR</option>
+                                            <option value="PA">PA</option>
+                                            <option value="RI">RI</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SD">SD</option>
+                                            <option value="TN">TN</option>
+                                            <option value="TX">TX</option>
+                                            <option value="UT">UT</option>
+                                            <option value="VT">VT</option>
+                                            <option value="VA">VA</option>
+                                            <option value="WA">WA</option>
+                                            <option value="WI">WI</option>
+                                            <option value="WV">WV</option>
+                                            <option value="WY">WY</option>
                                         </select>
                                     </div>
 
-                                    <button type="submit">Create Account</button>
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="contactName">Contact Name</label>
+                                        <input type="text" id="title" name="contactName" minlength="2"
+                                            placeholder="Job contact name" class="form-control">
+                                        <label class="form-label mt-3" for="contactEmail">Contact Email</label>
+                                        <input type="email" id="contactEmail" name="contactEmail"
+                                            placeholder="Job contact email address" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="salaryMin">Minimum Salary</label>
+                                        <input type="number" id="salaryMin" name="salaryMin" class="form-control">
+                                        <label class="form-label mt-3" for="salaryMax">Maximum Salary</label>
+                                        <input type="number" id="salaryMax" name="salaryMax" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="jobType" class="form-label mt-3">Job Type</label>
+                                        <select class="form-select" id="jobType" name="jobType">
+                                            <option value="">Select a job type</option>
+                                            <% types.forEach(type => { %>
+                                                <option value="<%= type.id %>">
+                                                    <%= type.name %>
+                                                </option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="postDate" class="form-label mt-3">Date Posted</label>
+                                        <input class="form-control" type="date" id="postDate"
+                                            name="postDate">
+                                    </div>
+
+                                    <button type="submit">Create Job</button>
                                 </form>
                             </div>
                         </div>

@@ -86,8 +86,14 @@ const registrationValidation = [
         .withMessage('Passwords must match')
 ];
 
+//TODO: FINISH THIS VALIDATION
+const jobValidation = [
+
+];
+
 export { 
     registrationValidation, 
     loginValidation,
-    updateAccountValidation
+    updateAccountValidation,
+    jobValidation
 };

@@ -51,14 +51,13 @@ CREATE TABLE IF NOT EXISTS jobs (
     company TEXT VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     url TEXT NOT NULL,
-    location VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(255),
     contact_name VARCHAR(100),
     contact_email VARCHAR(255),
-    source VARCHAR(255),
-    category VARCHAR(255),
     salary_min INTEGER,
     salary_max INTEGER,
-    status_id INTEGER NOT NULL REFERENCES job_status(status_id) ON DELETE RESTRICT,
+    status_id INTEGER NOT NULL DEFAULT 1 REFERENCES job_status(status_id) ON DELETE RESTRICT,
     type_id INTEGER NOT NULL REFERENCES job_type(type_id) ON DELETE RESTRICT,
     posted_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -101,6 +100,12 @@ VALUES
     ('suggestion'),
     ('potential'),
     ('application')
+ON CONFLICT (name) DO NOTHING;
+
+-- Seed companies
+INSERT INTO companies (name, url, category, owner_user_id)
+VALUES
+    ('Example Company', 'https://www.byui.edu/', 'University', 1)
 ON CONFLICT (name) DO NOTHING;
 
 COMMIT;

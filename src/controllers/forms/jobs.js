@@ -1,17 +1,29 @@
 import { validationResult } from 'express-validator';
+import { getAllJobTypes } from '../../models/jobs/jobs.js';
 
 /**
  * Display the job form used by job seekers.
  */
-const showNewJobForm = (req, res) => {
-    res.render('forms/jobs/form', {
-        title: 'Log a Job Posting'
-    });
+const showNewJobForm = async (req, res) => {
+    try {
+        const types = await getAllJobTypes();
+
+        return res.render('jobs/new', {
+            title: 'Log a Job Posting',
+            types
+        });
+    } catch (error) {
+        console.error('Error loading job form:', error);
+        return res.status(500).render('errors/500', {
+            title: 'Server Error'
+        });
+    }
 };
 
 /**
  * Process new job form submission.
  */
+//TODO: FINISH THIS FUNCTION
 const processNewJob = async (req, res) => {
     // Check for validation errors
     const errors = validationResult(req);
