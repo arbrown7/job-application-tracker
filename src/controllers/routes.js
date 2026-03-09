@@ -55,4 +55,13 @@ router.get('/register/:id/edit', requireRole('admin'), showEditAccountForm);
 router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation, processEditAccount);
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
+// Job routes
+//router.get('/jobs'); //list current user’s jobs
+//router.get('/jobs/new'); //show add-job form
+//router.post('/jobs'); //create a new job
+//router.get('/jobs/:id'); //show one job
+//router.get('/jobs/:id/edit'); //show edit form
+//router.post('/jobs/:id/edit'); //update job
+//router.post('/jobs/:id/delete'); //delete job
+
 export default router;

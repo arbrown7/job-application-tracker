@@ -5,7 +5,7 @@ import { findUserByEmail, verifyPassword } from '../../models/forms/login.js';
  * Display the login form.
  */
 const showLoginForm = (req, res) => {
-        res.render('forms/login/form', {
+    res.render('forms/login/form', {
         title: 'User Login'
     });
 };

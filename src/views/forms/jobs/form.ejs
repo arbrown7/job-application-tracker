@@ -1,0 +1,94 @@
+<%- include('partials/dashboard/header') %>
+    <main>
+        <div class="bg-light rental-form-page">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h1 class="h3 mb-4">
+                                    <%= title %>
+                                </h1>
+                                <p>
+                                    Add a new job application you would like to track the status of. Fields marked with
+                                    * are required.
+                                </p>
+                                <!-- fields we need
+                                
+                                title* - text
+                                url* - text
+                                company - text
+                                location - text
+                                contact Name - text
+                                contact email - text
+                                source - text
+                                category - text
+                                salary min - integer
+                                salary max - integer
+                                type* - dropdown
+                                posted date - date -->
+
+                                <form method="POST" action="/jobs" class="vstack gap-3">
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="title">Title*</label>
+                                        <input type="text" id="title" name="title" minlength="2" required
+                                            placeholder="Job title" class="form-control">
+                                        <label class="form-label mt-3" for="url">URL*</label>
+                                        <input type="text" id="url" name="url" minlength="2" required
+                                            placeholder="Web address" class="form-control">
+                                        <label class="form-label mt-3" for="url">Company*</label>
+                                        <input type="text" id="company" name="company" minlength="1" required
+                                            placeholder="Company name or acronym" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="email">Email</label>
+                                        <input type="email" id="email" name="email" placeholder="Email address"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="emailConfirm">Confirm Email</label>
+                                        <input type="emailConfirm" id="emailConfirm" name="emailConfirm"
+                                            placeholder="Confirm email address" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="password">Password</label>
+                                        <input type="password" name="password" id="password" minlength="8"
+                                            pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" placeholder="Password" required
+                                            class="form-control">
+                                        <div class="help-text">
+                                            <p>Your password must contain:</p>
+                                            <ul>
+                                                <li>At least 8 characters</li>
+                                                <li>1 number</li>
+                                                <li>1 special character (! @ # $ % ^ & *)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="passwordConfirm">Confirm Password</label>
+                                        <input type="password" minlength="8" name="passwordConfirm" id="passwordConfirm"
+                                            pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" placeholder="Confirm password"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="role">Role</label>
+                                        <select id="role" name="role">
+                                            <option value="jobSeeker">Job Seeker</option>
+                                            <option value="supporter">Supporter</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit">Create Account</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('partials/dashboard/footer') %>
