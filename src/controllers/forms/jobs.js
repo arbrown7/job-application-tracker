@@ -58,6 +58,7 @@ const processNewJob = async (req, res) => {
         // After successfully saving to the database
         req.flash('success', 'Job created');
         // Redirect to responses page on success
+        //TODO: Fix this
         return res.render('job/:id', {
             title: 'Job Details',
             id: req.body.id,
