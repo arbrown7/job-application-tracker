@@ -10,7 +10,8 @@ import {
 import {
     registrationValidation, 
     loginValidation,
-    updateAccountValidation
+    updateAccountValidation,
+    jobValidation
 } from '../middleware/validation/forms.js'
 import {
     showRegistrationForm, 
@@ -63,8 +64,8 @@ router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 // Job routes
 //router.get('/jobs', jobsPage); //list current user’s jobs
 router.get('/jobs/new', showNewJobForm);
-//router.post('/jobs/new', jobValidation, processNewJob); //create a new job
-//router.get('/jobs/:id'); //show one job
+router.post('/jobs/new', jobValidation, processNewJob); //create a new job
+//router.get('/jobs/:id', ); //show one job
 //router.get('/jobs/:id/edit'); //show edit form
 //router.post('/jobs/:id/edit'); //update job
 //router.post('/jobs/:id/delete'); //delete job

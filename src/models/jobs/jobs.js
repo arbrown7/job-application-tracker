@@ -95,4 +95,40 @@ const getAllJobs = async (userId, sortBy = 'last_changed') => {
     }));
 };
 
-export {getAllJobStatuses, getAllJobTypes, getAllJobs};
+const createJob = async (job) => {
+    const query = `
+        INSERT INTO jobs (
+            owner_user_id,
+            title,
+            url,
+            company,
+            city,
+            state,
+            contact_name,
+            contact_email,
+            salary_min,
+            salary_max,
+            posted_date,
+            type_id
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        RETURNING *
+    `;
+    const result = await db.query(query, [ 
+            job.userId,
+            job.title,
+            job.url,
+            job.company, 
+            job.city, 
+            job.state,
+            job.contactName,
+            job.contactEmail, 
+            job.minSalary, 
+            job.maxSalary,
+            job.datePosted,
+            job.type
+    ]);
+    return result.rows[0];
+};
+
+export {getAllJobStatuses, getAllJobTypes, getAllJobs, createJob};

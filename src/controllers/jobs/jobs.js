@@ -18,8 +18,8 @@ const jobsPage = async (req, res) => {
 
     const jobs = await getAllJobs(userId, sortBy);
     
-    res.render('catalog/list', {
-        title: 'Course Catalog',
+    res.render('jobs', {
+        title: 'All Jobs',
         jobs: jobs
     });
 };

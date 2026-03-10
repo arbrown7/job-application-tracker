@@ -113,21 +113,25 @@ const jobValidation = [
         .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
         .withMessage('Company contains invalid characters'),
     body('city')
+        .optional({ checkFalsy: true })
         .trim()
         .isLength({ min: 2, max: 100 })
         .withMessage('City must be between 2 and 100 characters')
         .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
         .withMessage('City contains invalid characters'),
     body('state')
+        .optional({ checkFalsy: true })
         .isLength({ min: 2, max: 2 })
         .withMessage('Must be a valid state'),
     body('contactName')
+        .optional({ checkFalsy: true })
         .trim()
         .isLength({ min: 2, max: 100 })
         .withMessage('Contact came must be between 2 and 100 characters')
         .matches(/^[a-zA-Z\s'-]+$/)
         .withMessage('Contact name can only contain letters, spaces, hyphens, and apostrophes'),
     body('contactEmail')
+        .optional({ checkFalsy: true })
         .trim()
         .isEmail()
         .normalizeEmail()
@@ -135,10 +139,12 @@ const jobValidation = [
         .isLength({ max: 255 })
         .withMessage('Contact email address is too long'),
     body('salaryMin')
+        .optional({ checkFalsy: true })
         .trim()
         .isInt({min: 0, max: 999999999})
         .withMessage('Must be a integer number'), 
     body('salaryMax')
+        .optional({ checkFalsy: true })
         .trim()
         .isInt({min: 0, max: 999999999})
         .withMessage('Must be a integer number'),
@@ -149,7 +155,7 @@ const jobValidation = [
         .custom( async (value) => {
             //AI was used to help create this function
             const types = await getAllJobTypes();
-            const validTypeIds = types.map(type => String(type.type_id));
+            const validTypeIds = types.map(type => String(type.id));
 
             if (!validTypeIds.includes(String(value))) {
                 throw new Error('Selected job type does not exist.');
@@ -158,6 +164,7 @@ const jobValidation = [
             return true;
         }),
     body('postDate')
+        .optional({ checkFalsy: true })
         .isDate()
         .withMessage('Must be a valid date.')
 ];
