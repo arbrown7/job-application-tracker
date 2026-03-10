@@ -8,7 +8,7 @@ const showNewJobForm = async (req, res) => {
     try {
         const types = await getAllJobTypes();
 
-        return res.render('jobs/new', {
+        return res.render('forms/jobs/form', {
             title: 'Log a Job Posting',
             types
         });

@@ -1,4 +1,4 @@
-<%- include('partials/dashboard/header') %>
+<%- include('../../partials/dashboard/header') %>
     <main>
         <div class="bg-light rental-form-page">
             <div class="container py-5">
@@ -6,12 +6,10 @@
                     <div class="col-12 col-lg-8">
                         <div class="card shadow-sm">
                             <div class="card-body p-4">
-                                <h1 class="h3 mb-4">
-                                    <%= title %>
-                                </h1>
                                 <p>
-                                    Add a new job application you would like to track the status of. Fields marked with
-                                    * are required.
+                                    Add a new job application you would like to track the status of. 
+                                    <br>
+                                    Fields marked with * are required.
                                 </p>
 
                                 <form method="POST" action="/jobs" class="vstack gap-3">
@@ -105,8 +103,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="jobType" class="form-label mt-3">Job Type</label>
-                                        <select class="form-select" id="jobType" name="jobType">
+                                        <label class="form-label mt-3" for="jobType">Job Type*</label>
+                                        <select class="form-select" id="jobType" name="jobType" required>
                                             <option value="">Select a job type</option>
                                             <% types.forEach(type => { %>
                                                 <option value="<%= type.id %>">
@@ -131,4 +129,4 @@
             </div>
         </div>
     </main>
-    <%- include('partials/dashboard/footer') %>
+    <%- include('../../partials/dashboard/footer') %>

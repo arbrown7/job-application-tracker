@@ -35,20 +35,20 @@ CREATE TABLE IF NOT EXISTS companies (
 -- Create job status table
 CREATE TABLE IF NOT EXISTS job_status (
     status_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-)
+    name VARCHAR(100) UNIQUE NOT NULL
+);
 
 -- Create job type table
 CREATE TABLE IF NOT EXISTS job_type (
     type_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-)
+    name VARCHAR(100) UNIQUE NOT NULL
+);
 
 -- Create jobs table
 CREATE TABLE IF NOT EXISTS jobs (
     job_id SERIAL PRIMARY KEY,
     owner_user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-    company TEXT VARCHAR(255) NOT NULL,
+    company VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     url TEXT NOT NULL,
     city VARCHAR(255),
@@ -106,6 +106,6 @@ ON CONFLICT (name) DO NOTHING;
 INSERT INTO companies (name, url, category, owner_user_id)
 VALUES
     ('Example Company', 'https://www.byui.edu/', 'University', 1)
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 COMMIT;

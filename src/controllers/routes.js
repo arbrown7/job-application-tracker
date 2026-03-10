@@ -68,5 +68,9 @@ router.get('/jobs/new', showNewJobForm);
 //router.get('/jobs/:id/edit'); //show edit form
 //router.post('/jobs/:id/edit'); //update job
 //router.post('/jobs/:id/delete'); //delete job
+//router.post('/josb/leads', leadPage); //lists current user's job leads
+
+// Company routes
+//router.get('/companies', companiesPage); //shows current user's companies
 
 export default router;

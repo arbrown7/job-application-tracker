@@ -1,4 +1,4 @@
-import { getAllJobs } from "../../models/jobs/jobs";
+import { getAllJobs } from "../../models/jobs/jobs.js";
 
 const jobsPage = async (req, res) => {
     // For reference
