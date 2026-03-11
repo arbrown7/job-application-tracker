@@ -30,44 +30,30 @@ const getAllJobTypes = async () => {
     }));
 };
 
-/**
- * Get all courses from the database with optional sorting.
- * 
- * @param {integer} userId - id of the user requesting all jobs
- * @param {string} sortBy - Sort option: 
- *                              'last_changed' (default), 
- *                              'title', 
- *                              'company', 
- *                              'state', 
- *                              'salary_min', 
- *                              'salary_max', 
- *                              'status', 
- *                              'type', 
- *                              'posted_date
- * @returns {Promise<Array>} Array of job objects
- */
-const getAllJobs = async (userId, sortBy = 'last_changed') => {
+const getAllJobs = async (userId, sortBy = 'lastChanged') => {
     const orderByClause =
         sortBy === 'title' ? 'j.title' :
-        sortBy === 'company' ? 'c.name' :
+        sortBy === 'jobId' ? 'j.job_id' :
         sortBy === 'state' ? 'j.state' :
-        sortBy === 'salary_min' ? 'j.salary_min' :
-        sortBy === 'salary_max' ? 'j.salary_max' :
+        sortBy === 'minSalary' ? 'j.salary_min' :
+        sortBy === 'maxSalary' ? 'j.salary_max' :
         sortBy === 'status' ? 'js.name' :
         sortBy === 'type' ? 'jt.name' :
-        sortBy === 'posted_date' ? 'j.posted_date' :
+        sortBy === 'datePosted' ? 'j.posted_date' :
         'j.last_changed';
     
     const query = `
         SELECT
             j.job_id,
             j.title,
+            j.company,
+            j.url,
             j.city,
             j.state,
             j.salary_min,
             j.salary_max,
-            j.posted_date,
-            j.last_changed,
+            TO_CHAR(j.posted_date, 'DD/MM/YY') AS posted_date,
+            TO_CHAR(j.last_changed, 'DD/MM/YY') AS last_changed,
             js.name AS status,
             jt.name AS type
         FROM jobs j
@@ -82,8 +68,11 @@ const getAllJobs = async (userId, sortBy = 'last_changed') => {
     const result = await db.query(query, [userId]);
    
     return result.rows.map(job => ({
-        id: job.id,
+        id: job.job_id,
         title: job.title,
+        company: job.company,
+        shortenedUrl: shortenUrl(job.url),
+        url: job.url,
         city: job.city,
         state: job.state,
         minSalary: job.salary_min,
@@ -130,5 +119,11 @@ const createJob = async (job) => {
     ]);
     return result.rows[0];
 };
+
+function shortenUrl(url) {
+    url = url.substring(0,20);
+    let shortenedUrl = url + '...'
+    return shortenedUrl;
+}
 
 export {getAllJobStatuses, getAllJobTypes, getAllJobs, createJob};

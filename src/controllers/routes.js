@@ -62,7 +62,7 @@ router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation,
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes
-//router.get('/jobs', jobsPage); //list current user’s jobs
+router.get('/jobs', jobsPage); //list current user’s jobs
 router.get('/jobs/new', showNewJobForm);
 router.post('/jobs/new', jobValidation, processNewJob); //create a new job
 //router.get('/jobs/:id', ); //show one job
