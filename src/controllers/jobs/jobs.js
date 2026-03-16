@@ -99,10 +99,94 @@ const processSuggestion = async (req, res) => {
 
 };
 
+/**
+ * Process job edit form submission
+ */
+//TODO: Fix this function
+const processEditJob = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        return res.redirect(`/jobs/${req.params.id}/edit`);
+    }
+
+    const targetUserId = parseInt(req.params.id);
+    const currentUser = req.session.user;
+    const { name, email } = req.body;
+
+    try {
+        const targetUser = await getUserById(targetUserId);
+
+        if (!targetUser) {
+            req.flash('error', 'User not found.');
+            return res.redirect('/');
+        }
+
+        // Check permissions
+        const canEdit = currentUser.id === targetUserId;
+
+        if (!canEdit) {
+            req.flash('error', 'You do not have permission to edit this job.');
+            return res.redirect('/jobs');
+        }
+
+        // Update the user
+        await updateUser(targetUserId, name, email);
+
+        req.flash('success', 'Job updated successfully.');
+        return res.redirect('/jobs');
+    } catch (error) {
+        console.error('Error updating job:', error);
+        req.flash('error', 'An error occurred while updating the job.');
+        return res.redirect(`/jobs`);
+    }
+};
+
+/**
+ * Process job deletion
+ */
+//TODO: Fix this function
+const processDeleteJob = async (req, res) => {
+    const targetUserId = parseInt(req.params.id);
+    const currentUser = req.session.user;
+
+    // Only admins can delete accounts
+    if (currentUser.roleName !== 'admin') {
+        req.flash('error', 'You do not have permission to delete accounts.');
+        return res.redirect('/register/list');
+    }
+
+    // Prevent admins from deleting their own account
+    if (currentUser.id === targetUserId) {
+        req.flash('error', 'You cannot delete your own account.');
+        return res.redirect('/register/list');
+    }
+
+    try {
+        const deleted = await deleteUser(targetUserId);
+
+        if (deleted) {
+            req.flash('success', 'User account deleted successfully.');
+        } else {
+            req.flash('error', 'User not found or already deleted.');
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        req.flash('error', 'An error occurred while deleting the account.');
+    }
+
+    return res.redirect('/register/list');
+};
+
 export { 
     jobsPage,
     showNewJobForm,
     processNewJob,
     showSuggestionForm, 
-    processSuggestion 
+    processSuggestion,
+    processEditJob,
+    processDeleteJob 
 };
