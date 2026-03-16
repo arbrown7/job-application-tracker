@@ -21,11 +21,13 @@ import {
     processEditAccount,
     processDeleteAccount
 } from './forms/registration.js';
-import { jobsPage } from './jobs/jobs.js';
 import { 
+    jobsPage,
     showNewJobForm,
-    processNewJob
-} from './forms/jobs.js';
+    processNewJob,
+    showSuggestionForm, 
+    processSuggestion 
+} from './jobs/jobs.js';
 
 const router = Router();
 

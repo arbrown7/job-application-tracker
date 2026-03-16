@@ -33,10 +33,7 @@ const getAllJobTypes = async () => {
 const getAllJobs = async (userId, sortBy = 'lastChanged') => {
     const orderByClause =
         sortBy === 'title' ? 'j.title' :
-        sortBy === 'jobId' ? 'j.job_id' :
         sortBy === 'state' ? 'j.state' :
-        sortBy === 'minSalary' ? 'j.salary_min' :
-        sortBy === 'maxSalary' ? 'j.salary_max' :
         sortBy === 'status' ? 'js.name' :
         sortBy === 'type' ? 'jt.name' :
         sortBy === 'datePosted' ? 'j.posted_date' :

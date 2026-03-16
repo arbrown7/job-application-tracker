@@ -1,4 +1,4 @@
-<%- include('../../partials/dashboard/header') %>
+<%- include('../partials/dashboard/header') %>
     <div class="table-responsive"></div>
     <table class="table">
         <thead>
@@ -22,12 +22,10 @@
                     <a href="/jobs/?sort=state" class="<%= currentSort === 'state' ? 'active' : '' %>">State</a>
                 </th>
                 <th scope="col">
-                    <a href="/jobs/?sort=minSalary" class="<%= currentSort === 'minSalary' ? 'active' : '' %>">Min
-                        Salary</a>
+                    Min Salary
                 </th>
                 <th scope="col">
-                    <a href="/jobs/?sort=maxSalary" class="<%= currentSort === 'maxSalary' ? 'active' : '' %>">Max
-                        Salary</a>
+                    Max Salary
                 </th>
                 <th scope="col">
                     <a href="/jobs/?sort=datePosted" class="<%= currentSort === 'datePosted' ? 'active' : '' %>">Date
@@ -45,20 +43,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">Id</th>
-                <td>Title</td>
-                <td>Company</td>
-                <td>URL</td>
-                <td>City</td>
-                <td>State</td>
-                <td>Min</td>
-                <td>Max</td>
-                <td>Date posted</td>
-                <td>Last changed</td>
-                <td>Status</td>
-                <td>Type</td>
-            </tr>
             <% Object.values(jobs).forEach(job=> { %>
                 <tr>
                     <th scope="row">
@@ -106,4 +90,4 @@
         </tbody>
     </table>
     </div>
-    <%- include('../../partials/dashboard/footer') %>
+    <%- include('../partials/dashboard/footer') %>
