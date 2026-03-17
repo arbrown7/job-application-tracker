@@ -11,7 +11,8 @@ import {
     registrationValidation, 
     loginValidation,
     updateAccountValidation,
-    jobValidation
+    jobValidation,
+    jobEditValidation
 } from '../middleware/validation/forms.js'
 import {
     showRegistrationForm, 
@@ -26,7 +27,9 @@ import {
     showNewJobForm,
     processNewJob,
     showSuggestionForm, 
-    processSuggestion 
+    processSuggestion,
+    showEditJobForm,
+    processEditJob 
 } from './jobs/jobs.js';
 
 const router = Router();
@@ -67,9 +70,8 @@ router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 router.get('/jobs', jobsPage); //list current user’s jobs
 router.get('/jobs/new', showNewJobForm);
 router.post('/jobs/new', jobValidation, processNewJob); //create a new job
-//router.get('/jobs/:id', ); //show one job
-//router.get('/jobs/:id/edit'); //show edit form
-//router.post('/jobs/:id/edit'); //update job
+router.get('/jobs/:id/edit', showEditJobForm); //show edit form
+router.post('/jobs/:id/edit', jobEditValidation, processEditJob); //update job
 //router.post('/jobs/:id/delete'); //delete job
 //router.post('/josb/leads', leadPage); //lists current user's job leads
 

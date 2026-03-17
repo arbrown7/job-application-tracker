@@ -10,27 +10,30 @@
                                     <br>
                                     Fields marked with * are required.
                                 </p>
-                                <!-- TODO Update This Form -->
-                                <form method="POST" action="/jobs/new" class="vstack gap-3">
+                                <form method="POST" action="/jobs/<%= targetJobId %>/edit" class="vstack gap-3">
                                     <div class="form-group">
                                         <label class="form-label mt-3" for="title">Title*</label>
                                         <input type="text" id="title" name="title" minlength="2" required
-                                            placeholder="Job title" class="form-control">
+                                            placeholder="Job title" class="form-control" value="<%= job.title %>">
                                         <label class="form-label mt-3" for="url">URL*</label>
                                         <input type="text" id="url" name="url" minlength="2" required
-                                            placeholder="Web address" class="form-control">
+                                            placeholder="Web address" class="form-control" value="<%= job.url %>">
                                         <label class="form-label mt-3" for="url">Company*</label>
                                         <input type="text" id="company" name="company" minlength="1" required
-                                            placeholder="Company name or acronym" class="form-control">
+                                            placeholder="Company name or acronym" class="form-control" value="<%= job.company %>">
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label mt-3" for="city">City</label>
                                         <input type="text" id="city" name="city" placeholder="City"
-                                            class="form-control">
+                                            class="form-control" value="<%= job.city %>">
                                         <label class="form-label mt-3" for="state">State</label>
                                         <select type="text" id="state" name="state" class="form-control">
-                                            <option value="">Select a State</option>
+                                            <% if(job.state) { %>
+                                                <option value="<%= job.state %>"><%= job.state %></option>
+                                            <% } else { %>
+                                                <option value="">Select a State</option>
+                                            <% } %>
                                             <option value="AL">AL</option>
                                             <option value="AK">AK</option>
                                             <option value="AR">AR</option>
@@ -88,17 +91,17 @@
                                     <div class="form-group">
                                         <label class="form-label mt-3" for="contactName">Contact Name</label>
                                         <input type="text" id="title" name="contactName" minlength="2"
-                                            placeholder="Job contact name" class="form-control">
+                                            placeholder="Job contact name" class="form-control" value="<%= job.contactName %>">
                                         <label class="form-label mt-3" for="contactEmail">Contact Email</label>
                                         <input type="email" id="contactEmail" name="contactEmail"
-                                            placeholder="Job contact email address" class="form-control">
+                                            placeholder="Job contact email address" class="form-control" value="<%= job.contactEmail %>">
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label mt-3" for="minSalary">Minimum Salary</label>
-                                        <input type="number" id="minSalary" name="minSalary" class="form-control">
+                                        <input type="number" id="minSalary" name="minSalary" class="form-control" value="<%= job.minSalary %>">
                                         <label class="form-label mt-3" for="maxSalary">Maximum Salary</label>
-                                        <input type="number" id="maxSalary" name="maxSalary" class="form-control">
+                                        <input type="number" id="maxSalary" name="maxSalary" class="form-control" value="<%= job.maxSalary %>">
                                     </div>
 
                                     <div class="form-group">
@@ -106,9 +109,33 @@
                                         <select class="form-select" id="jobType" name="jobType" required>
                                             <option value="">Select a job type</option>
                                             <% types.forEach(type => { %>
-                                                <option value="<%= type.id %>">
-                                                    <%= type.name %>
-                                                </option>
+                                                <% if(type.id === job.type) { %>
+                                                    <option value="<%= type.id %>" selected="selected">
+                                                        <%= type.name %>
+                                                    </option>
+                                                <% } else { %>
+                                                   <option value="<%= type.id %>">
+                                                        <%= type.name %>
+                                                    </option> 
+                                                <% } %>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="jobStatus">Job Status*</label>
+                                        <select class="form-select" id="jobStatus" name="jobStatus" required>
+                                            <option value="">Select a job type</option>
+                                            <% statuses.forEach(status => { %>
+                                                <% if(status.id === job.status) { %>
+                                                    <option value="<%= status.id %>" selected="selected">
+                                                        <%= status.name %>
+                                                    </option>
+                                                <% } else { %>
+                                                   <option value="<%= status.id %>">
+                                                        <%= status.name %>
+                                                    </option> 
+                                                <% } %>
                                             <% }) %>
                                         </select>
                                     </div>
@@ -116,10 +143,15 @@
                                     <div class="form-group">
                                         <label for="postDate" class="form-label mt-3">Date Posted</label>
                                         <input class="form-control" type="date" id="postDate"
-                                            name="postDate">
+                                            name="postDate" value="<%= job.datePosted %>">
                                     </div>
 
-                                    <button type="submit">Create Job</button>
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <form method="POST" action="/jobs/<%= targetJobId %>/delete" style="margin: 0;">
+                                            <button type="submit" class="btn btn-danger">Delete Job</button>
+                                        </form>
+                                    </div>
                                 </form>
                             </div>
                         </div>

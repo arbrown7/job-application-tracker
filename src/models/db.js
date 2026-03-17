@@ -26,8 +26,17 @@ const pool = new Pool({
         ca: caCert,  // Use the certificate content, not the file path
         rejectUnauthorized: true,  // Keep this true for proper security
         checkServerIdentity: () => { return undefined; }  // Skip hostname verification but keep cert chain validation
-    }
+    },
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
 });
+
+pool.on('error', (err) => {
+    console.error('PG Pool error:', err);
+});
+//I got help from AI to add the keepAlive, time out, and error logging above
 
 /**
  * Since we will modify the normal pool object in development mode, we need to create and

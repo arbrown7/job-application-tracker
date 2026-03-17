@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Create companies table
-CREATE TABLE IF NOT EXISTS companies (
-    company_id SERIAL PRIMARY KEY, 
-    name VARCHAR(100) NOT NULL, 
-    url TEXT NOT NULL, 
-    category VARCHAR(100) NOT NULL,
-    owner_user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE
-); 
+-- CREATE TABLE IF NOT EXISTS companies (
+--     company_id SERIAL PRIMARY KEY, 
+--     name VARCHAR(100) NOT NULL, 
+--     url TEXT NOT NULL, 
+--     category VARCHAR(100) NOT NULL,
+--     owner_user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE
+-- ); 
 
 -- Create job status table
 CREATE TABLE IF NOT EXISTS job_status (

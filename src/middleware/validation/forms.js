@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { getAllJobTypes } from '../../models/jobs/jobs.js';
+import { getAllJobStatuses, getAllJobTypes } from '../../models/jobs/jobs.js';
 /**
  * Validation rules for login form
  */
@@ -169,9 +169,107 @@ const jobValidation = [
         .withMessage('Must be a valid date.')
 ];
 
+/**
+ * Validation rules for editing a job
+ */
+const jobEditValidation = [
+    body('title')
+        .notEmpty()
+        .withMessage('Title is required')
+        .trim()
+        .isLength({ min: 2, max: 255 })
+        .withMessage('Title must be between 2 and 255 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Title contains invalid characters'),
+    body('url')
+        .notEmpty()
+        .withMessage('URL is required')
+        .isURL({require_protocol: true})
+        .withMessage('Must be a valid URL'),
+    body('company')
+        .notEmpty()
+        .withMessage('Company is required')
+        .trim()
+        .isLength({ min: 2, max: 255 })
+        .withMessage('Company must be between 2 and 255 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Company contains invalid characters'),
+    body('city')
+        .optional({ checkFalsy: true })
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('City must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('City contains invalid characters'),
+    body('state')
+        .optional({ checkFalsy: true })
+        .isLength({ min: 2, max: 2 })
+        .withMessage('Must be a valid state'),
+    body('contactName')
+        .optional({ checkFalsy: true })
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Contact came must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Contact name can only contain letters, spaces, hyphens, and apostrophes'),
+    body('contactEmail')
+        .optional({ checkFalsy: true })
+        .trim()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage('Must be a valid email address')
+        .isLength({ max: 255 })
+        .withMessage('Contact email address is too long'),
+    body('salaryMin')
+        .optional({ checkFalsy: true })
+        .trim()
+        .isInt({min: 0, max: 999999999})
+        .withMessage('Must be a integer number'), 
+    body('salaryMax')
+        .optional({ checkFalsy: true })
+        .trim()
+        .isInt({min: 0, max: 999999999})
+        .withMessage('Must be a integer number'),
+    body('jobType')
+        .notEmpty()
+        .withMessage('Job type is required.')
+        .isInt({min: 1})
+        .custom( async (value) => {
+            //AI was used to help create this function
+            const types = await getAllJobTypes();
+            const validTypeIds = types.map(type => String(type.id));
+
+            if (!validTypeIds.includes(String(value))) {
+                throw new Error('Selected job type does not exist.');
+            }
+
+            return true;
+        }),
+    body('jobStatus')
+        .notEmpty()
+        .withMessage('Job status is required.')
+        .isInt({min: 1})
+        .custom( async (value) => {
+            //AI was used to help create this function
+            const statuses = await getAllJobStatuses();
+            const validStatusIds = statuses.map(status => String(status.id));
+
+            if (!validStatusIds.includes(String(value))) {
+                throw new Error('Selected status type does not exist.');
+            }
+
+            return true;
+        }),
+    body('postDate')
+        .optional({ checkFalsy: true })
+        .isDate()
+        .withMessage('Must be a valid date.')
+];
+
 export { 
     registrationValidation, 
     loginValidation,
     updateAccountValidation,
-    jobValidation
+    jobValidation,
+    jobEditValidation
 };

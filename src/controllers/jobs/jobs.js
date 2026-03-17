@@ -1,5 +1,13 @@
 import { validationResult } from 'express-validator';
-import { getAllJobs, getAllJobTypes, createJob } from "../../models/jobs/jobs.js";
+import { 
+    getAllJobs, 
+    getAllJobTypes, 
+    createJob, 
+    getJobById, 
+    getJobOwner,
+    updateJob,
+    getAllJobStatuses
+} from "../../models/jobs/jobs.js";
 
 /**
  * Display the job form used by job seekers.
@@ -100,9 +108,45 @@ const processSuggestion = async (req, res) => {
 };
 
 /**
+ * Display the edit job form prefilled with job's information
+ */
+const showEditJobForm = async (req, res) => {
+    const targetJobId = parseInt(req.params.id);
+    const currentUser = req.session.user;
+
+    const targetJob = await getJobById(targetJobId);
+
+    if (!targetJob) {
+        req.flash('error', 'Job not found.');
+        return res.redirect('/jobs');
+    }
+    
+    const targetJobOwner = await getJobOwner(targetJobId);
+    const canEdit = currentUser.user_id === targetJobOwner.owner_user_id;
+    let types = await getAllJobTypes();
+    let statuses = await getAllJobStatuses();
+
+    if (!canEdit) {
+        req.flash('error', 'You do not have permission to edit this job.');
+        return res.redirect('/jobs');
+    }
+
+    res.render('jobs/edit', {
+        title: 'Edit Job',
+        job: {
+            ...targetJob,
+            datePosted: targetJob.datePosted ? targetJob.datePosted.toISOString().split('T')[0] : ''
+        },
+        targetJobId: targetJobId,
+        types: types,
+        statuses: statuses
+    });
+};
+
+/**
  * Process job edit form submission
  */
-//TODO: Fix this function
+
 const processEditJob = async (req, res) => {
     const errors = validationResult(req);
 
@@ -113,28 +157,42 @@ const processEditJob = async (req, res) => {
         return res.redirect(`/jobs/${req.params.id}/edit`);
     }
 
-    const targetUserId = parseInt(req.params.id);
+    const targetJobId = parseInt(req.params.id);
     const currentUser = req.session.user;
-    const { name, email } = req.body;
+    
+    const jobInput = { 
+        userId: req.session.user.user_id,
+        title: req.body.title,
+        url: req.body.url,
+        company: req.body.company,
+        city: req.body.city || null,
+        state: req.body.state || null,
+        contactName: req.body.contactName || null,
+        contactEmail: req.body.contactEmail || null,
+        minSalary: req.body.minSalary || null,
+        maxSalary: req.body.maxSalary || null,
+        datePosted: req.body.postDate || null,
+        type: req.body.jobType,
+        status: req.body.jobStatus
+    };
 
     try {
-        const targetUser = await getUserById(targetUserId);
+        const targetJob = await getJobById(targetJobId);
 
-        if (!targetUser) {
-            req.flash('error', 'User not found.');
+        if (!targetJob) {
+            req.flash('error', 'Job not found.');
             return res.redirect('/');
         }
 
-        // Check permissions
-        const canEdit = currentUser.id === targetUserId;
+        const targetJobOwner = await getJobOwner(targetJobId);
+        const canEdit = currentUser.user_id === targetJobOwner.owner_user_id;
 
         if (!canEdit) {
             req.flash('error', 'You do not have permission to edit this job.');
             return res.redirect('/jobs');
         }
 
-        // Update the user
-        await updateUser(targetUserId, name, email);
+        await updateJob(jobInput, targetJobId);
 
         req.flash('success', 'Job updated successfully.');
         return res.redirect('/jobs');
@@ -186,6 +244,7 @@ export {
     showNewJobForm,
     processNewJob,
     showSuggestionForm, 
+    showEditJobForm,
     processSuggestion,
     processEditJob,
     processDeleteJob 

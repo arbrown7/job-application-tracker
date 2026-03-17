@@ -30,6 +30,41 @@ const getAllJobTypes = async () => {
     }));
 };
 
+const getJobById = async (jobId) => {
+    const query = `
+        SELECT 
+            jobs.job_id,
+            jobs.title,
+            jobs.company,
+            jobs.url,
+            jobs.city,
+            jobs.state,
+            jobs.contact_name as "contactName",
+            jobs.contact_email as "contactEmail",
+            jobs.salary_min as "minSalary",
+            jobs.salary_max as "maxSalary",
+            jobs.status_id as "status",
+            jobs.type_id as "type",
+            jobs.posted_date as "datePosted",
+            jobs.created_at as "dateCreated",
+            jobs.last_changed as "lastChanged"
+        FROM jobs
+        WHERE jobs.job_id = $1
+    `;
+    const result = await db.query(query, [jobId]);
+    return result.rows[0] || null;
+};
+
+const getJobOwner = async (jobId) => {
+    const query = `
+        SELECT jobs.owner_user_id
+        FROM jobs
+        WHERE jobs.job_id = $1
+    `;
+    const result = await db.query(query, [jobId]);
+    return result.rows[0] || null;
+};
+
 const getAllJobs = async (userId, sortBy = 'lastChanged') => {
     const orderByClause =
         sortBy === 'title' ? 'j.title' :
@@ -49,8 +84,8 @@ const getAllJobs = async (userId, sortBy = 'lastChanged') => {
             j.state,
             j.salary_min,
             j.salary_max,
-            TO_CHAR(j.posted_date, 'DD/MM/YY') AS posted_date,
-            TO_CHAR(j.last_changed, 'DD/MM/YY') AS last_changed,
+            TO_CHAR(j.posted_date, 'MM/DD/YY') AS posted_date,
+            TO_CHAR(j.last_changed, 'MM/DD/YY') AS last_changed,
             js.name AS status,
             jt.name AS type
         FROM jobs j
@@ -117,10 +152,56 @@ const createJob = async (job) => {
     return result.rows[0];
 };
 
+const updateJob = async (job, jobId) => {
+        const query = `
+        UPDATE jobs
+        SET
+            title = $1,
+            url = $2,
+            company = $3,
+            city = $4,
+            state = $5,
+            contact_name = $6,
+            contact_email = $7,
+            salary_min = $8,
+            salary_max = $9,
+            posted_date = $10,
+            type_id = $11,
+            status_id = $12,
+            last_changed = CURRENT_TIMESTAMP
+        WHERE jobs.job_id = $13
+        RETURNING *
+    `;
+    const result = await db.query(query, [ 
+            job.title,
+            job.url,
+            job.company, 
+            job.city, 
+            job.state,
+            job.contactName,
+            job.contactEmail, 
+            job.minSalary, 
+            job.maxSalary,
+            job.datePosted,
+            job.type,
+            job.status,
+            jobId
+    ]);
+    return result.rows[0];
+};
+
 function shortenUrl(url) {
     url = url.substring(0,20);
     let shortenedUrl = url + '...'
     return shortenedUrl;
 }
 
-export {getAllJobStatuses, getAllJobTypes, getAllJobs, createJob};
+export {
+    getAllJobStatuses, 
+    getAllJobTypes, 
+    getAllJobs, 
+    createJob, 
+    getJobById, 
+    getJobOwner,
+    updateJob
+};
