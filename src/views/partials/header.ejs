@@ -52,19 +52,28 @@
                             <a class="nav-link" href="/register">Register</a>
                         </li>
                     <% } %>
-                    <!-- Only visible when logged in -->
-                    <% if (isLoggedIn) { %>
+                    <!-- Only visible when job seeker -->
+                    <% if (isSeeker) { %>
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">Dashboard</a>
                         </li>
+                    <% } %>
+                    <!-- Only visible when supporter -->
+                    <% if (isSupporter) { %>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
+                            <a class="nav-link" href="/jobs/suggestion">Suggest a Job</a>
                         </li>
                     <% } %>
                     <!-- Only visible when admin -->
                     <% if (isAdmin) { %>
                         <li class="nav-item">
                             <a class="nav-link" href="/register/list">Admin</a>
+                        </li>
+                    <% } %>
+                    <!-- Only visible when logged in -->
+                    <% if (isLoggedIn) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     <% } %>
                 </ul>

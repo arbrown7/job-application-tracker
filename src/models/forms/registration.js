@@ -92,11 +92,25 @@ const deleteUser = async (id) => {
     return result.rowCount > 0;
 };
 
+/**
+ * Get user id by email
+ */
+const getUserIdByEmail = async (email) => {
+    const query = `
+        SELECT user_id
+        FROM users
+        WHERE email = $1
+    `;
+    const result = await db.query(query, [email]);
+    return result.rows[0]?.user_id || null;
+};
+
 export { 
     emailExists, 
     saveUser, 
     getAllUsers, 
     getUserById, 
     updateUser, 
-    deleteUser 
+    deleteUser,
+    getUserIdByEmail 
 };

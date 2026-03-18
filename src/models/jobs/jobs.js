@@ -194,7 +194,16 @@ function shortenUrl(url) {
     url = url.substring(0,20);
     let shortenedUrl = url + '...'
     return shortenedUrl;
-}
+};
+
+const getSuggestionId = async () => {
+    const types = await getAllJobTypes();
+    for( let i = 0; i < types.length; i++) {
+        if (types[i].name.toUpperCase() === "SUGGESTION"){
+            return types[i].id;
+        }
+    };
+};
 
 export {
     getAllJobStatuses, 
@@ -203,5 +212,6 @@ export {
     createJob, 
     getJobById, 
     getJobOwner,
-    updateJob
+    updateJob,
+    getSuggestionId
 };

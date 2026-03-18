@@ -12,7 +12,8 @@ import {
     loginValidation,
     updateAccountValidation,
     jobValidation,
-    jobEditValidation
+    jobEditValidation,
+    suggestionValidation
 } from '../middleware/validation/forms.js'
 import {
     showRegistrationForm, 
@@ -55,7 +56,7 @@ router.get('/login', showLoginForm);
 router.post('/login', loginValidation, processLogin);
 
 // Authentication-related routes at root level
-router.get('/dashboard', requireLogin, showDashboard);
+router.get('/dashboard', requireRole('job_seeker'), showDashboard);
 router.get('/logout', processLogout);
 
 // Registration routes
@@ -67,13 +68,14 @@ router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation,
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes
-router.get('/jobs', jobsPage); //list current user’s jobs
-router.get('/jobs/new', showNewJobForm);
-router.post('/jobs/new', jobValidation, processNewJob); //create a new job
-router.get('/jobs/:id/edit', showEditJobForm); //show edit form
-router.post('/jobs/:id/edit', jobEditValidation, processEditJob); //update job
-//router.post('/jobs/:id/delete'); //delete job
-//router.post('/josb/leads', leadPage); //lists current user's job leads
+router.get('/jobs', requireRole('job_seeker'), jobsPage);
+router.get('/jobs/new', requireRole('job_seeker'), showNewJobForm);
+router.post('/jobs/new', requireRole('job_seeker'), jobValidation, processNewJob);
+router.get('/jobs/suggestion', requireRole('supporter'), showSuggestionForm);
+router.post('/jobs/suggestion', requireRole('supporter'), suggestionValidation, processSuggestion);
+router.get('/jobs/:id/edit', requireRole('job_seeker'), showEditJobForm);
+router.post('/jobs/:id/edit', requireRole('job_seeker'), jobEditValidation, processEditJob);
+//router.post('/jobs/:id/delete');
 
 // Company routes
 //router.get('/companies', companiesPage); //shows current user's companies

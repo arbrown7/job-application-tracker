@@ -1,0 +1,127 @@
+<%- include('../partials/header') %>
+    <main>
+        <div class="bg-light rental-form-page">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <p>
+                                    Send a job suggestion 
+                                    <br>
+                                    Fields marked with * are required.
+                                </p>
+
+                                <form method="POST" action="/jobs/suggestion" class="vstack gap-3">
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="title">Title*</label>
+                                        <input type="text" id="title" name="title" minlength="2" required
+                                            placeholder="Job title" class="form-control">
+                                        <label class="form-label mt-3" for="url">URL*</label>
+                                        <input type="text" id="url" name="url" minlength="2" required
+                                            placeholder="Web address" class="form-control">
+                                        <label class="form-label mt-3" for="url">Company*</label>
+                                        <input type="text" id="company" name="company" minlength="1" required
+                                            placeholder="Company name or acronym" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="city">City</label>
+                                        <input type="text" id="city" name="city" placeholder="City"
+                                            class="form-control">
+                                        <label class="form-label mt-3" for="state">State</label>
+                                        <select type="text" id="state" name="state" class="form-control">
+                                            <option value="">Select a State</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AK">AK</option>
+                                            <option value="AR">AR</option>
+                                            <option value="AZ">AZ</option>
+                                            <option value="CA">CA</option>
+                                            <option value="CO">CO</option>
+                                            <option value="CT">CT</option>
+                                            <option value="DC">DC</option>
+                                            <option value="DE">DE</option>
+                                            <option value="FL">FL</option>
+                                            <option value="GA">GA</option>
+                                            <option value="HI">HI</option>
+                                            <option value="IA">IA</option>
+                                            <option value="ID">ID</option>
+                                            <option value="IL">IL</option>
+                                            <option value="IN">IN</option>
+                                            <option value="KS">KS</option>
+                                            <option value="KY">KY</option>
+                                            <option value="LA">LA</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MD">MD</option>
+                                            <option value="ME">ME</option>
+                                            <option value="MI">MI</option>
+                                            <option value="MN">MN</option>
+                                            <option value="MO">MO</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MT">MT</option>
+                                            <option value="NC">NC</option>
+                                            <option value="NE">NE</option>
+                                            <option value="NH">NH</option>
+                                            <option value="NJ">NJ</option>
+                                            <option value="NM">NM</option>
+                                            <option value="NV">NV</option>
+                                            <option value="NY">NY</option>
+                                            <option value="ND">ND</option>
+                                            <option value="OH">OH</option>
+                                            <option value="OK">OK</option>
+                                            <option value="OR">OR</option>
+                                            <option value="PA">PA</option>
+                                            <option value="RI">RI</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SD">SD</option>
+                                            <option value="TN">TN</option>
+                                            <option value="TX">TX</option>
+                                            <option value="UT">UT</option>
+                                            <option value="VT">VT</option>
+                                            <option value="VA">VA</option>
+                                            <option value="WA">WA</option>
+                                            <option value="WI">WI</option>
+                                            <option value="WV">WV</option>
+                                            <option value="WY">WY</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="contactName">Contact Name</label>
+                                        <input type="text" id="title" name="contactName" minlength="2"
+                                            placeholder="Job contact name" class="form-control">
+                                        <label class="form-label mt-3" for="contactEmail">Contact Email</label>
+                                        <input type="email" id="contactEmail" name="contactEmail"
+                                            placeholder="Job contact email address" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="minSalary">Minimum Salary</label>
+                                        <input type="number" id="minSalary" name="minSalary" class="form-control">
+                                        <label class="form-label mt-3" for="maxSalary">Maximum Salary</label>
+                                        <input type="number" id="maxSalary" name="maxSalary" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="postDate" class="form-label mt-3">Date Posted</label>
+                                        <input class="form-control" type="date" id="postDate"
+                                            name="postDate">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label mt-3" for="seekerEmail">Job Seeker Email</label>
+                                        <input type="email" id="seekerEmail" name="seekerEmail"
+                                            placeholder="Who do you want to send this job suggestion to?" 
+                                            class="form-control" required>
+                                    </div>
+
+                                    <button type="submit">Send Job</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer') %>
