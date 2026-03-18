@@ -1,7 +1,48 @@
-# job-application-tracker
-This app helps users track their job applications and their statuses.
-Project Description: What your site does and who it is for
-Database Schema: An image of your entity relation diagram (ERD) exported from pgAdmin showing your tables and relationships
-User Roles: Explanation of each role and what they can do
-Test Account Credentials: Username or email for one account of each role type
-Known Limitations: Any features you did not complete or bugs you are aware of
+# Job Application Tracker
+
+## Project Description
+This website allows users to track and manage job applications. Users can create, edit, and delete job entries and monitor application statuses.
+
+Intended users include individuals actively searching for jobs who want a structured way to track their applications.
+
+---
+
+## Database Schema
+
+Below is the Entity Relationship Diagram (ERD) for the database.
+
+...insert image here...
+
+---
+
+## User Roles
+
+### Admin
+- Manage all users
+- Create, manage, and delete job types
+- Create, manage, and delete job statuses
+
+### Normal User - Job Seeker
+- Create, manage, and delete their own jobs
+- View and edit their personal data
+
+### Limited User - Supporter
+- Send job suggestions to job seekers
+
+---
+
+## Test Account Credentials
+
+Use the following test accounts to log in.
+
+| Role | Email / Username |
+|-----|------------------|
+| Admin | admin@example.com |
+| User | user@example.com |
+
+---
+
+## Known Limitations
+
+
+---
