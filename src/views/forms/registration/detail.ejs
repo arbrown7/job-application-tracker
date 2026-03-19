@@ -1,0 +1,19 @@
+<%- include('../../partials/header') %>
+    <main>
+        <h1>
+            <%= title %>
+        </h1>
+        <div class="user-card">
+            <h3>
+                <%= user.first_name %>
+                    <%= user.last_name %>
+            </h3>
+            <p>
+                <%= user.email %>
+            </p>
+            <div class="user-actions">
+                <a href="/register/<%= user.user_id %>/edit">Edit</a>
+            </div>
+        </div>
+    </main>
+<%- include('../../partials/footer') %>

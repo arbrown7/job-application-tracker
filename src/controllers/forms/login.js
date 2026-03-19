@@ -44,7 +44,7 @@ const processLogin = async (req, res) => {
 
         req.session.user = user;
         req.flash('success', 'Welcome ' + user.first_name + '!')
-        return res.redirect('/dashboard');
+        return res.redirect('/');
     } catch (error) {
         // Model functions do not catch errors, so handle them here
         console.error('Invalid email or password', error);

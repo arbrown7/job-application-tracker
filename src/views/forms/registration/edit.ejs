@@ -18,9 +18,13 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<%= user.email %>" required>
         </div>
-
+        
         <button type="submit">Update Account</button>
-        <a href="/register/list">Cancel</a>
+        <% if (isAdmin) { %>
+            <a href="/register/list">Cancel</a>
+        <% } else {%>
+            <a href="/registration/profile">Cancel</a>
+        <% } %>
     </form>
 </main>
 

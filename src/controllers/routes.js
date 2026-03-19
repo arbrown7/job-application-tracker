@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
-import { requireLogin, requireRole } from '../middleware/auth.js';
+import { 
+    requireLogin, 
+    requireRole,
+    requireAdminOrOwner 
+} from '../middleware/auth.js';
 import { 
     processLogout, 
     showDashboard, 
@@ -19,6 +23,7 @@ import {
     showRegistrationForm, 
     processRegistration,
     showAllUsers,
+    showUser,
     showEditAccountForm,
     processEditAccount,
     processDeleteAccount
@@ -63,8 +68,9 @@ router.get('/logout', processLogout);
 router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidation, processRegistration);
 router.get('/register/list', showAllUsers);
-router.get('/register/:id/edit', requireRole('admin'), showEditAccountForm);
-router.post('/register/:id/edit', requireRole('admin'), updateAccountValidation, processEditAccount);
+router.get('/registration/profile', requireLogin, showUser);
+router.get('/register/:id/edit', requireAdminOrOwner, showEditAccountForm);
+router.post('/register/:id/edit', requireAdminOrOwner, updateAccountValidation, processEditAccount);
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes

@@ -89,6 +89,26 @@ const showAllUsers = async (req, res) => {
 };
 
 /**
+ * Display all registered users.
+ */
+const showUser = async (req, res) => {
+    let userId = req.session.user.user_id;
+    let user = null;
+
+    try {
+        user = await getUserById(userId);
+    } catch (error) {
+        console.error('Error retrieving user', error);
+    }
+
+    res.render('forms/registration/detail', {
+        title: 'User Profile',
+        user,
+        user: req.session && req.session.user ? req.session.user : null
+    });
+};
+
+/**
  * Display the edit account form
  * Users can edit their own account, admins can edit any account
  */
@@ -103,7 +123,6 @@ const showEditAccountForm = async (req, res) => {
         return res.redirect('/register/list');
     }
 
-    // Check permissions: users can edit themselves, admins can edit anyone
     const canEdit = currentUser.user_id === targetUserId || currentUser.roleName === 'admin';
 
     if (!canEdit) {
@@ -216,6 +235,7 @@ export {
     showRegistrationForm,
     processRegistration,
     showAllUsers,
+    showUser,
     showEditAccountForm,
     processEditAccount,
     processDeleteAccount
