@@ -32,11 +32,13 @@ import {
     jobsPage,
     showNewJobForm,
     processNewJob,
-    showSuggestionForm, 
-    processSuggestion,
     showEditJobForm,
-    processEditJob 
+    processEditJob,
 } from './jobs/jobs.js';
+import { 
+    showSuggestionForm,
+    processSuggestion
+} from './jobs/suggestions.js';
 
 const router = Router();
 

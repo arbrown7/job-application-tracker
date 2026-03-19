@@ -65,7 +65,7 @@ const getJobOwner = async (jobId) => {
     return result.rows[0] || null;
 };
 
-const getAllJobs = async (userId, sortBy = 'lastChanged') => {
+const getAllJobs = async (userId, sortBy = 'lastChanged', type = null) => {
     const orderByClause =
         sortBy === 'title' ? 'j.title' :
         sortBy === 'state' ? 'j.state' :
@@ -73,6 +73,13 @@ const getAllJobs = async (userId, sortBy = 'lastChanged') => {
         sortBy === 'type' ? 'jt.name' :
         sortBy === 'datePosted' ? 'j.posted_date' :
         'j.last_changed';
+
+    const params = [userId];
+    let typeFilter = '';
+    if (type) {
+        params.push(type);
+        typeFilter = `AND jt.name = $2`;
+    }
     
     const query = `
         SELECT
@@ -94,10 +101,11 @@ const getAllJobs = async (userId, sortBy = 'lastChanged') => {
         JOIN job_type jt
             ON j.type_id = jt.type_id
         WHERE j.owner_user_id = $1
+        ${typeFilter}
         ORDER BY ${orderByClause};
     `;
     
-    const result = await db.query(query, [userId]);
+    const result = await db.query(query, params);
    
     return result.rows.map(job => ({
         id: job.job_id,

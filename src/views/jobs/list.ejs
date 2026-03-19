@@ -1,114 +1,122 @@
 <%- include('../partials/dashboard/header') %>
-    <div class="table-responsive"></div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">
-                    <a href="/jobs/?sort=jobId" class="<%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">
-                        ID<%= currentSort === 'jobId' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    <a href="/jobs/?sort=title" class="<%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">
-                        Title<%= currentSort === 'title' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    Company
-                </th>
-                <th scope="col">
-                    URL
-                </th>
-                <th scope="col">
-                    City
-                </th>
-                <th scope="col">
-                    <a href="/jobs/?sort=state" class="<%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">
-                        State<%= currentSort === 'state' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    Min Salary
-                </th>
-                <th scope="col">
-                    Max Salary
-                </th>
-                <th scope="col">
-                    <a href="/jobs/?sort=datePosted" class="<%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date
-                        Posted<%= currentSort === 'datePosted' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    <a href="/jobs" class="<%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">
-                        Date Changed<%= currentSort === 'lastChanged' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    <a href="/jobs/?sort=status" class="<%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">
-                        Status<%= currentSort === 'status' ? '↑' : '↕' %>
-                    </a>
-                </th>
-                <th scope="col">
-                    <a href="/jobs/?sort=type" class="<%= currentSort === 'type' ? 'active' : '' %> text-decoration-none">
-                        Type<%= currentSort === 'type' ? '↑' : '↕' %>
-                    </a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (jobs && jobs.length> 0) { %>
-                <% Object.values(jobs).forEach(job=> { %>
+    <div class="table-responsive">
+        <% if (jobs && jobs.length> 0) { %>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th>
-                            <a href="/jobs/<%= job.id %>/edit" class="text-decoration-none link-underline-opacity-100-hover">✏️</i></a>
-                        </th>
-                        <td scope="row">
-                            <%= job.id %>
-                        </td>
-                        <td>
-                            <!-- <a href="/jobs/<%= job.id %>" class="text-decoration-none link-dark"> -->
-                                <%= job.title %>
-                            <!-- </a> -->
-                        </td>
-                        <td>
-                            <%= job.company %>
-                        </td>
-                        <td>
-                            <a href="<%= job.url %>" class="link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <%= job.shortenedUrl %>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=jobId"
+                                class="<%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">
+                                ID<%= currentSort==='jobId' ? '↑' : '↕' %>
                             </a>
-                        </td>
-                        <td>
-                            <%= job.city %>
-                        </td>
-                        <td>
-                            <%= job.state %>
-                        </td>
-                        <td>
-                            <%= job.minSalary %>
-                        </td>
-                        <td>
-                            <%= job.maxSalary %>
-                        </td>
-                        <td>
-                            <%= job.datePosted %>
-                        </td>
-                        <td>
-                            <%= job.lastChanged %>
-                        </td>
-                        <td>
-                            <%= job.status %>
-                        </td>
-                        <td>
-                            <%= job.type %>
-                        </td>
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=title"
+                                class="<%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">
+                                Title<%= currentSort==='title' ? '↑' : '↕' %>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            Company
+                        </th>
+                        <th scope="col">
+                            URL
+                        </th>
+                        <th scope="col">
+                            City
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=state"
+                                class="<%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">
+                                State<%= currentSort==='state' ? '↑' : '↕' %>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            Min Salary
+                        </th>
+                        <th scope="col">
+                            Max Salary
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=datePosted"
+                                class="<%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date
+                                Posted<%= currentSort==='datePosted' ? '↑' : '↕' %>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs"
+                                class="<%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">
+                                Date Changed<%= currentSort==='lastChanged' ? '↑' : '↕' %>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=status"
+                                class="<%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">
+                                Status<%= currentSort==='status' ? '↑' : '↕' %>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="/jobs/?sort=title&type=<%= currentType || '' %>"
+                                class="<%= currentSort === 'type' ? 'active' : '' %> text-decoration-none">
+                                Type<%= currentSort==='type' ? '↑' : '↕' %>
+                            </a>
+                        </th>
                     </tr>
-                <% }); %>
-            <% } else { %>
-            <p class="no-jobs">No jobs logged yet.</p>
-            <% } %>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    <% Object.values(jobs).forEach(job=> { %>
+                        <tr>
+                            <th>
+                                <a href="/jobs/<%= job.id %>/edit"
+                                    class="text-decoration-none link-underline-opacity-100-hover">✏️</i></a>
+                            </th>
+                            <td scope="row">
+                                <%= job.id %>
+                            </td>
+                            <td>
+                                <!-- <a href="/jobs/<%= job.id %>" class="text-decoration-none link-dark"> -->
+                                <%= job.title %>
+                                    <!-- </a> -->
+                            </td>
+                            <td>
+                                <%= job.company %>
+                            </td>
+                            <td>
+                                <a href="<%= job.url %>" class="link-underline-opacity-0 link-underline-opacity-100-hover">
+                                    <%= job.shortenedUrl %>
+                                </a>
+                            </td>
+                            <td>
+                                <%= job.city %>
+                            </td>
+                            <td>
+                                <%= job.state %>
+                            </td>
+                            <td>
+                                <%= job.minSalary %>
+                            </td>
+                            <td>
+                                <%= job.maxSalary %>
+                            </td>
+                            <td>
+                                <%= job.datePosted %>
+                            </td>
+                            <td>
+                                <%= job.lastChanged %>
+                            </td>
+                            <td>
+                                <%= job.status %>
+                            </td>
+                            <td>
+                                <%= job.type %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-jobs">No <%= currentType %>s logged yet.</p>
+        <% } %>
     </div>
-    <%- include('../partials/dashboard/footer') %>
+<%- include('../partials/dashboard/footer') %>
