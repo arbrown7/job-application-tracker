@@ -57,53 +57,57 @@
             </tr>
         </thead>
         <tbody>
-            <% Object.values(jobs).forEach(job=> { %>
-                <tr>
-                    <th>
-                        <a href="/jobs/<%= job.id %>/edit" class="text-decoration-none link-underline-opacity-100-hover">✏️</i></a>
-                    </th>
-                    <td scope="row">
-                        <%= job.id %>
-                    </td>
-                    <td>
-                        <!-- <a href="/jobs/<%= job.id %>" class="text-decoration-none link-dark"> -->
-                            <%= job.title %>
-                        <!-- </a> -->
-                    </td>
-                    <td>
-                        <%= job.company %>
-                    </td>
-                    <td>
-                        <a href="<%= job.url %>" class="link-underline-opacity-0 link-underline-opacity-100-hover">
-                            <%= job.shortenedUrl %>
-                        </a>
-                    </td>
-                    <td>
-                        <%= job.city %>
-                    </td>
-                    <td>
-                        <%= job.state %>
-                    </td>
-                    <td>
-                        <%= job.minSalary %>
-                    </td>
-                    <td>
-                        <%= job.maxSalary %>
-                    </td>
-                    <td>
-                        <%= job.datePosted %>
-                    </td>
-                    <td>
-                        <%= job.lastChanged %>
-                    </td>
-                    <td>
-                        <%= job.status %>
-                    </td>
-                    <td>
-                        <%= job.type %>
-                    </td>
-                </tr>
+            <% if (jobs && jobs.length> 0) { %>
+                <% Object.values(jobs).forEach(job=> { %>
+                    <tr>
+                        <th>
+                            <a href="/jobs/<%= job.id %>/edit" class="text-decoration-none link-underline-opacity-100-hover">✏️</i></a>
+                        </th>
+                        <td scope="row">
+                            <%= job.id %>
+                        </td>
+                        <td>
+                            <!-- <a href="/jobs/<%= job.id %>" class="text-decoration-none link-dark"> -->
+                                <%= job.title %>
+                            <!-- </a> -->
+                        </td>
+                        <td>
+                            <%= job.company %>
+                        </td>
+                        <td>
+                            <a href="<%= job.url %>" class="link-underline-opacity-0 link-underline-opacity-100-hover">
+                                <%= job.shortenedUrl %>
+                            </a>
+                        </td>
+                        <td>
+                            <%= job.city %>
+                        </td>
+                        <td>
+                            <%= job.state %>
+                        </td>
+                        <td>
+                            <%= job.minSalary %>
+                        </td>
+                        <td>
+                            <%= job.maxSalary %>
+                        </td>
+                        <td>
+                            <%= job.datePosted %>
+                        </td>
+                        <td>
+                            <%= job.lastChanged %>
+                        </td>
+                        <td>
+                            <%= job.status %>
+                        </td>
+                        <td>
+                            <%= job.type %>
+                        </td>
+                    </tr>
                 <% }); %>
+            <% } else { %>
+            <p class="no-jobs">No jobs logged yet.</p>
+            <% } %>
         </tbody>
     </table>
     </div>

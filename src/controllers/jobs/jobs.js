@@ -10,7 +10,8 @@ import {
     getSuggestionId
 } from "../../models/jobs/jobs.js";
 import {
-    getUserIdByEmail
+    getUserIdByEmail,
+    emailExists
 } from "../../models/forms/registration.js"
 
 /**
@@ -141,7 +142,7 @@ const processSuggestion = async (req, res) => {
         let seekerId = null;
 
         if (emailInDB) {
-            seekerId = await getUserIdByEmail();
+            seekerId = await getUserIdByEmail(email);
         }  else {
             req.flash('error', 'Error sending suggestion');
             return res.redirect('/');
@@ -152,7 +153,7 @@ const processSuggestion = async (req, res) => {
              userId: seekerId 
             });
 
-        req.flash('success', 'Suggestion created');
+        req.flash('success', 'Suggestion sent!');
         return res.redirect('/');
     } catch (error) {
         console.error('Error saving suggestion', error);

@@ -41,4 +41,18 @@ const requireRole = (roleName) => {
     };
 };
 
-export { requireLogin, requireRole };
+const requireAdminOrOwner = (req, res, next) => {
+    if (!req.session.user) {
+        req.flash('error', 'You must be logged in');
+        return res.redirect('/login');
+    }
+    const isAdmin = req.session.user.roleName === 'admin';
+    const isOwner = req.session.user.user_id === parseInt(req.params.id);
+    if (isAdmin || isOwner) {
+        return next();
+    }
+    req.flash('error', 'You do not have permission to access this page');
+    return res.redirect('/');
+};
+
+export { requireLogin, requireRole, requireAdminOrOwner };
