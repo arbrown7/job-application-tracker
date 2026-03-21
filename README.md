@@ -37,8 +37,9 @@ Use the following test accounts to log in.
 
 | Role | Email / Username |
 |-----|------------------|
-| Admin | admin@example.com |
-| User | user@example.com |
+| Admin | admin@test.com |
+| Job Seeker | seeker@test.com |
+| Supporter | supporter@test.com |
 
 ---
 
@@ -46,3 +47,7 @@ Use the following test accounts to log in.
 
 
 ---
+
+## Live Site
+
+[Deployed on Render](https://job-application-tracker-gaqh.onrender.com)
