@@ -34,7 +34,7 @@ const showNewJobForm = async (req, res) => {
  */
 const jobsPage = async (req, res) => {
     const userId = req.session.user.user_id;
-    const sortBy = req.query.sort || 'last_changed';
+    const sortBy = req.query.sort || 'lastChanged';
     const type = req.query.type || null;
 
     const jobs = await getAllJobs(userId, sortBy, type);

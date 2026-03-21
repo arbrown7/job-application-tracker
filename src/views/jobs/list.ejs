@@ -1,122 +1,76 @@
 <%- include('../partials/dashboard/header') %>
-    <div class="table-responsive">
-        <% if (jobs && jobs.length> 0) { %>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=jobId"
-                                class="<%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">
-                                ID<%= currentSort==='jobId' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=title"
-                                class="<%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">
-                                Title<%= currentSort==='title' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            Company
-                        </th>
-                        <th scope="col">
-                            URL
-                        </th>
-                        <th scope="col">
-                            City
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=state"
-                                class="<%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">
-                                State<%= currentSort==='state' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            Min Salary
-                        </th>
-                        <th scope="col">
-                            Max Salary
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=datePosted"
-                                class="<%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date
-                                Posted<%= currentSort==='datePosted' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs"
-                                class="<%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">
-                                Date Changed<%= currentSort==='lastChanged' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=status"
-                                class="<%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">
-                                Status<%= currentSort==='status' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                        <th scope="col">
-                            <a href="/jobs/?sort=title&type=<%= currentType || '' %>"
-                                class="<%= currentSort === 'type' ? 'active' : '' %> text-decoration-none">
-                                Type<%= currentSort==='type' ? '↑' : '↕' %>
-                            </a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% Object.values(jobs).forEach(job=> { %>
-                        <tr>
-                            <th>
-                                <a href="/jobs/<%= job.id %>/edit"
-                                    class="text-decoration-none link-underline-opacity-100-hover">✏️</i></a>
-                            </th>
-                            <td scope="row">
-                                <%= job.id %>
-                            </td>
-                            <td>
-                                <!-- <a href="/jobs/<%= job.id %>" class="text-decoration-none link-dark"> -->
-                                <%= job.title %>
-                                    <!-- </a> -->
-                            </td>
-                            <td>
-                                <%= job.company %>
-                            </td>
-                            <td>
-                                <a href="<%= job.url %>" class="link-underline-opacity-0 link-underline-opacity-100-hover">
-                                    <%= job.shortenedUrl %>
-                                </a>
-                            </td>
-                            <td>
-                                <%= job.city %>
-                            </td>
-                            <td>
-                                <%= job.state %>
-                            </td>
-                            <td>
-                                <%= job.minSalary %>
-                            </td>
-                            <td>
-                                <%= job.maxSalary %>
-                            </td>
-                            <td>
-                                <%= job.datePosted %>
-                            </td>
-                            <td>
-                                <%= job.lastChanged %>
-                            </td>
-                            <td>
-                                <%= job.status %>
-                            </td>
-                            <td>
-                                <%= job.type %>
-                            </td>
-                        </tr>
-                        <% }); %>
-                </tbody>
-            </table>
-        <% } else { %>
-            <p class="no-jobs">No <%= currentType %>s logged yet.</p>
-        <% } %>
+<div class="container" style="max-width: 860px; padding: 2rem 1.5rem;">
+    <!-- HTML file generated mainly with AI -->
+
+    <!-- Sort pills -->
+    <div class="d-flex flex-wrap gap-2 mb-4 align-items-center">
+      <span style="font-size:12px; color:#888; margin-right: 4px;">Sort by</span>
+      <a href="/jobs?sort=jobId" class="sort-btn <%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">ID</a>
+      <a href="/jobs?sort=title" class="sort-btn <%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">Title</a>
+      <a href="/jobs?sort=state" class="sort-btn <%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">State</a>
+      <a href="/jobs?sort=datePosted" class="sort-btn <%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date posted</a>
+      <a href="/jobs?sort=lastChanged" class="sort-btn <%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">Date changed</a>
+      <a href="/jobs?sort=status" class="sort-btn <%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">Status</a>
+      <a href="/jobs/?sort=title&type=<%= currentType || '' %>" class="sort-btn <%= currentSort === 'type' ? 'active' : '' %> text-decoration-none">Type</a>
     </div>
+<% if (jobs && jobs.length> 0) { %>
+    <div class="d-flex flex-column gap-3">
+    <% Object.values(jobs).forEach(job=> { %>
+        <div class="job-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <p class="mb-0" style="font-size:15px; font-weight:500;"><%= job.title %></p>
+                
+                <p class="text-secondary mb-0" style="font-size:13px;">
+                    <%= job.company %> 
+                    <% if(job.city && job.state) { %>
+                        &mdash; <%= job.city %>, <%= job.state %>
+                    <% } else if(job.city) { %>
+                        <%= job.city %>
+                    <% } else if(job.state) { %>
+                        <%= job.state %>
+                    <% } %>
+                </p>
+
+            </div>
+            <div class="d-flex gap-2">
+                <span class="badge-pill"><%= job.status %></span>
+                <span class="badge-pill"><%= job.type %></span>
+            </div>
+            </div>
+            <div class="border-top pt-2 d-flex justify-content-between align-items-center">
+            <div class="row g-2" style="width: 420px;">
+
+                <% if(job.minSalary && job.maxSalary) { %>
+                    <div class="col-4"><p class="meta-label">Salary range</p><p class="meta-value">$<%= job.minSalary %> – $<%= job.maxSalary %></p></div>
+                <% } else if(job.minSalary) { %>
+                    <div class="col-4"><p class="meta-label">Salary</p><p class="meta-value">$<%= job.minSalary %></p></div>
+                <% } else if(job.maxSalary){ %>
+                    <div class="col-4"><p class="meta-label">Salary</p><p class="meta-value">$<%= job.maxSalary %></p></div>
+                <% } %>
+
+                <div class="col-4"><p class="meta-label">Posted</p><p class="meta-value"><%= job.datePosted %></p></div>
+                
+                <% if(job.contactName && job.contactEmail) { %>
+                    <div class="col-4"><p class="meta-label">Contact</p><a href="mailto:<%= job.contactEmail %>" class="meta-value"><%= job.contactName %></a></div>
+                <% } else if(job.contactName) { %>
+                    <div class="col-4"><p class="meta-label">Contact</p><p class="meta-value"><%= job.contactName %></p></div>
+                <% } else if(job.contactName) { %>
+                    <div class="col-4"><p class="meta-label">Contact</p><p class="meta-value"><%= job.contactEmail %></p></div>
+                <% } %>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="<%= job.url %>" class="action-btn">View</a>
+                <a href="/jobs/<%= job.id %>/edit" class="action-btn">Edit</a>
+                <a href="/jobs/<%= job.id %>/delete" class="action-btn danger">Delete</a>
+            </div>
+            </div>
+        </div>
+      <% }); %>
+<% } else { %>
+    <p class="no-jobs">No <%= currentType %>s logged yet.</p>
+<% } %>
+    </div>
+
+  </div>
 <%- include('../partials/dashboard/footer') %>

@@ -42,11 +42,24 @@ import {
 
 const router = Router();
 
+// Add specific styles to home page
+router.use('/', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/home.css">');
+    next();
+});
+
 // Add registration-specific styles to all registration routes
 router.use('/register', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
     next();
 });
+
+// Add jobs-specific styles to all jobs routes
+router.use('/jobs', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/jobs.css">');
+    next();
+});
+
 
 // Add login-specific styles to all login routes
 router.use('/login', (req, res, next) => {

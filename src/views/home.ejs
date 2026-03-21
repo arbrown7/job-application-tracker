@@ -1,5 +1,97 @@
 <%- include('partials/header') %>
   <main>
-    <p>Homepage stuff goes here...</p>
+    <div class="container" style="max-width: 860px; padding: 2rem 1.5rem;">
+      <!-- HTML file generated mainly with AI -->
+      <!-- Hero -->
+      <div class="text-center py-4 mb-5">
+        <span class="badge-purple mb-3">Job seeking, simplified</span>
+        <h1 class="hero-title mt-3 mb-3">Track every application,<br>never miss an opportunity</h1>
+        <p class="hero-sub mb-4">JobTracker helps you stay organized through your job search — log applications, track
+          statuses, and get suggestions from your support network all in one place.</p>
+        <a href="/register" class="btn btn-outline-secondary">Get started for free</a>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="row g-3 mb-5">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: #EEEDFE;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="3" width="12" height="10" rx="2" stroke="#534AB7" stroke-width="1.2" />
+                <path d="M5 7h6M5 9.5h4" stroke="#534AB7" stroke-width="1.2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <p class="fw-500 mb-1" style="font-size:14px; font-weight:500;">Log applications</p>
+            <p class="text-secondary mb-0" style="font-size:13px; line-height:1.6;">Add job listings with details like
+              company, salary range, contact info, and posting date.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: #E1F5EE;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="5.5" stroke="#0F6E56" stroke-width="1.2" />
+                <path d="M5.5 8l1.8 1.8L10.5 6" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <p class="fw-500 mb-1" style="font-size:14px; font-weight:500;">Track your status</p>
+            <p class="text-secondary mb-0" style="font-size:13px; line-height:1.6;">See where you stand with each
+              application at a glance — applied, interviewing, or offered.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: #FAECE7;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M8 2.5C5.5 2.5 3.5 4.3 3.5 6.5c0 1.2.6 2.3 1.5 3L4 13l2.5-1.2c.5.1 1 .2 1.5.2 2.5 0 4.5-1.8 4.5-4S10.5 2.5 8 2.5z"
+                  stroke="#993C1D" stroke-width="1.2" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <p class="fw-500 mb-1" style="font-size:14px; font-weight:500;">Get suggestions</p>
+            <p class="text-secondary mb-0" style="font-size:13px; line-height:1.6;">Supporters in your network can
+              submit job leads directly to your tracker on your behalf.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example Application -->
+      <div class="example-wrap mb-5">
+        <p class="text-uppercase text-secondary mb-3" style="font-size:13px; font-weight:500; letter-spacing:0.05em;">
+          Example application</p>
+        <div class="example-card">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <p class="mb-0" style="font-size:15px; font-weight:500;">Frontend Developer</p>
+              <p class="text-secondary mb-0" style="font-size:13px;">Acme Corp &mdash; Salt Lake City, UT</p>
+            </div>
+            <span class="badge-status badge-green">Interviewing</span>
+          </div>
+          <div class="border-top pt-2">
+            <div class="row g-2">
+              <div class="col-4">
+                <p class="meta-label">Salary range</p>
+                <p class="meta-value">$80k – $100k</p>
+              </div>
+              <div class="col-4">
+                <p class="meta-label">Applied</p>
+                <p class="meta-value">Mar 10, 2026</p>
+              </div>
+              <div class="col-4">
+                <p class="meta-label">Contact</p>
+                <p class="meta-value">Jane Smith</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center pb-4">
+        <p class="cta-footer mb-3">Ready to take control of your job search?</p>
+        <a href="/register" class="btn btn-outline-secondary">Create your free account</a>
+      </div>
+
+    </div>
   </main>
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>
