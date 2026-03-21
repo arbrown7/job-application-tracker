@@ -27,6 +27,8 @@ const PORT = process.env.PORT || 3000;
  */
 const app = express();
 
+app.set('trust proxy', 1);
+
 // Initialize PostgreSQL session store
 const pgSession = connectPgSimple(session);
 
@@ -49,7 +51,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: NODE_ENV.includes('dev') !== true,
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000
     }
