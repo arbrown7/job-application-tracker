@@ -88,7 +88,7 @@ const processNewJob = async (req, res) => {
     } catch (error) {
         console.error('Error saving job', error);
         req.flash('error', 'Unable to submit your message. Please try again later.');
-        return res.redirect('/job/new');
+        return res.redirect('/jobs/new');
     }   
 };
 
