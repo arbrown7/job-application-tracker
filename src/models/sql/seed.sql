@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--ON DELETE RESTRICT on role prevents roles in use from being deleted
 
 -- Create job status table
 CREATE TABLE IF NOT EXISTS job_status (
@@ -54,6 +55,9 @@ CREATE TABLE IF NOT EXISTS jobs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_changed TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--ON DELETE CASCADE deletes jobs that belong to any users that are deleted
+--ON DELETE RESTRICT prevents a status from being deleted if it is in use
+--ON DELETE RESTRICT prevents a type from being deleted if it is in use
 
 -- Seed roles
 INSERT INTO roles (role_name, role_description) 
