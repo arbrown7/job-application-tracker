@@ -161,7 +161,7 @@ const createJob = async (job) => {
 };
 
 const updateJob = async (job, jobId) => {
-        const query = `
+    const query = `
         UPDATE jobs
         SET
             title = $1,
@@ -198,6 +198,12 @@ const updateJob = async (job, jobId) => {
     return result.rows[0];
 };
 
+const deleteJob = async (jobId) => {
+    const query = 'DELETE FROM jobs WHERE job_id = $1';
+    const result = await db.query(query, [jobId]);
+    return result.rowCount > 0;
+};
+
 function shortenUrl(url) {
     url = url.substring(0,20);
     let shortenedUrl = url + '...'
@@ -221,5 +227,6 @@ export {
     getJobById, 
     getJobOwner,
     updateJob,
-    getSuggestionId
+    getSuggestionId,
+    deleteJob
 };

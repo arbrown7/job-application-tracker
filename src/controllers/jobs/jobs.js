@@ -191,37 +191,23 @@ const processEditJob = async (req, res) => {
 /**
  * Process job deletion
  */
-//TODO: Fix this function
 const processDeleteJob = async (req, res) => {
-    const targetUserId = parseInt(req.params.id);
-    const currentUser = req.session.user;
-
-    // Only admins can delete accounts
-    if (currentUser.roleName !== 'admin') {
-        req.flash('error', 'You do not have permission to delete accounts.');
-        return res.redirect('/register/list');
-    }
-
-    // Prevent admins from deleting their own account
-    if (currentUser.id === targetUserId) {
-        req.flash('error', 'You cannot delete your own account.');
-        return res.redirect('/register/list');
-    }
+    const targetJobId = parseInt(req.params.id);
 
     try {
-        const deleted = await deleteUser(targetUserId);
+        const deleted = await deleteJob(targetJobId);
 
         if (deleted) {
-            req.flash('success', 'User account deleted successfully.');
+            req.flash('success', 'Job deleted successfully.');
         } else {
-            req.flash('error', 'User not found or already deleted.');
+            req.flash('error', 'Job not found or already deleted.');
         }
     } catch (error) {
-        console.error('Error deleting user:', error);
-        req.flash('error', 'An error occurred while deleting the account.');
+        console.error('Error deleting job:', error);
+        req.flash('error', 'An error occurred while deleting job.');
     }
 
-    return res.redirect('/register/list');
+    return res.redirect('/jobs');
 };
 
 export { 

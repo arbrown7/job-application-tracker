@@ -35,6 +35,7 @@ import {
     processNewJob,
     showEditJobForm,
     processEditJob,
+    processDeleteJob,
 } from './jobs/jobs.js';
 import { 
     showSuggestionForm,
@@ -103,6 +104,6 @@ router.get('/jobs/suggestion', requireRole('supporter'), showSuggestionForm);
 router.post('/jobs/suggestion', requireRole('supporter'), suggestionValidation, processSuggestion);
 router.get('/jobs/:id/edit', requireRole('job_seeker'), showEditJobForm);
 router.post('/jobs/:id/edit', requireRole('job_seeker'), jobEditValidation, processEditJob);
-//router.post('/jobs/:id/delete');
+router.post('/jobs/:id/delete', requireAdminOrOwner, processDeleteJob);
 
 export default router;
