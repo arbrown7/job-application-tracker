@@ -342,11 +342,23 @@ const suggestionValidation = [
         .withMessage('Seeker email address is too long')
 ];
 
+const itemValidation = [
+    body('name')
+        .notEmpty()
+        .withMessage('Item name is required')
+        .trim()
+        .isLength({ min: 3, max: 25})
+        .withMessage('Item name must be at least 3 characters, but no more than 25')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Item name contains invalid characters')
+];
+
 export { 
     registrationValidation, 
     loginValidation,
     updateAccountValidation,
     jobValidation,
     jobEditValidation,
-    suggestionValidation
+    suggestionValidation,
+    itemValidation
 };

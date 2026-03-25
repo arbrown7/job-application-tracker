@@ -89,7 +89,7 @@ const showAllUsers = async (req, res) => {
 };
 
 /**
- * Display all registered users.
+ * Display current user.
  */
 const showUser = async (req, res) => {
     let userId = req.session.user.user_id;

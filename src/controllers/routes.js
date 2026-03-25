@@ -17,7 +17,8 @@ import {
     updateAccountValidation,
     jobValidation,
     jobEditValidation,
-    suggestionValidation
+    suggestionValidation,
+    itemValidation
 } from '../middleware/validation/forms.js'
 import {
     showRegistrationForm, 
@@ -39,6 +40,10 @@ import {
     showSuggestionForm,
     processSuggestion
 } from './jobs/suggestions.js';
+import {
+    showAdminPage,
+    processAddItem
+} from './admin/admin.js';
 
 const router = Router();
 
@@ -75,9 +80,11 @@ router.get('/', homePage);
 router.get('/login', showLoginForm);
 router.post('/login', loginValidation, processLogin);
 
-// Authentication-related routes at root level
+// Authentication-related routes
 router.get('/dashboard', requireRole('job_seeker'), showDashboard);
 router.get('/logout', processLogout);
+router.get('/admin', requireRole('admin'), showAdminPage);
+router.post('/admin/:item/add', itemValidation, requireRole('admin'), processAddItem);
 
 // Registration routes
 router.get('/register', showRegistrationForm);
@@ -97,8 +104,5 @@ router.post('/jobs/suggestion', requireRole('supporter'), suggestionValidation, 
 router.get('/jobs/:id/edit', requireRole('job_seeker'), showEditJobForm);
 router.post('/jobs/:id/edit', requireRole('job_seeker'), jobEditValidation, processEditJob);
 //router.post('/jobs/:id/delete');
-
-// Company routes
-//router.get('/companies', companiesPage); //shows current user's companies
 
 export default router;

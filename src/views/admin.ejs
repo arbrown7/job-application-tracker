@@ -1,0 +1,65 @@
+<!-- page styled using the help of AI -->
+<%- include('partials/header') %>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <h4 class="mb-0 fw-semibold">Admin Dashboard</h4>
+        <a href="/register/list" class="btn btn-sm btn-outline-secondary">Edit Users</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-light text-muted small text-uppercase fw-semibold">
+                    Job Types
+                </div>
+                <% if (types && types.length> 0) { %>
+                    <ul class="list-group list-group-flush">
+                        <% types.forEach(type=> { %>
+                            <li class="list-group-item">
+                                <%= type.name %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                <% } else { %>
+                    <div class="card-body text-muted fst-italic small">No types yet — add one below.</div>
+                <% } %>
+                <div class="card-footer bg-white">
+                    <form method="POST" action="/admin/type/add" class="d-flex gap-2">
+                        <input type="text" id="typeName" name="name" class="form-control form-control-sm"
+                            placeholder="New job type…" required>
+                        <button type="submit" class="btn btn-sm btn-success text-nowrap">+ Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>    
+
+        <div class="col-12 col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-light text-muted small text-uppercase fw-semibold">
+                    Job Statuses
+                </div>
+                <% if (statuses && statuses.length> 0) { %>
+                    <ul class="list-group list-group-flush">
+                        <% Object.values(statuses).forEach(status=> { %>
+                            <li class="list-group-item">
+                                <%= status.name %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <div class="card-body text-muted fst-italic small">No statuses yet — add one below.</div>
+                <% } %>
+                <div class="card-footer bg-white">
+                    <form method="POST" action="/admin/status/add" class="d-flex gap-2">
+                        <input type="text" id="statusName" name="name" class="form-control form-control-sm"
+                            placeholder="New status…" required>
+                        <button type="submit" class="btn btn-sm btn-success text-nowrap">+ Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <%- include('partials/footer') %>
