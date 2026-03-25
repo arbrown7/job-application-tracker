@@ -23,15 +23,6 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create companies table
--- CREATE TABLE IF NOT EXISTS companies (
---     company_id SERIAL PRIMARY KEY, 
---     name VARCHAR(100) NOT NULL, 
---     url TEXT NOT NULL, 
---     category VARCHAR(100) NOT NULL,
---     owner_user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE
--- ); 
-
 -- Create job status table
 CREATE TABLE IF NOT EXISTS job_status (
     status_id SERIAL PRIMARY KEY,
@@ -102,10 +93,29 @@ VALUES
     ('application')
 ON CONFLICT (name) DO NOTHING;
 
--- Seed companies
-INSERT INTO companies (name, url, category, owner_user_id)
-VALUES
-    ('Example Company', 'https://www.byui.edu/', 'University', 1)
-ON CONFLICT DO NOTHING;
+INSERT INTO jobs (
+    owner_user_id, company, title, url, city, state,
+    contact_name, contact_email, salary_min, salary_max,
+    status_id, type_id, posted_date, created_at, last_changed
+) VALUES
+
+-- User 2 (seeker) - active pipeline
+(2, 'Stackrift', 'Software Engineer II', 'https://www.stackrift-fake.test/careers/software-engineer-ii', 'San Francisco', 'CA', 'Jamie Liu', 'jamie.liu@stackrift-fake.test', 130000, 160000, 4, 3, '2025-03-01', '2025-03-02', '2025-03-10'),
+(2, 'Lunarplex', 'Senior Frontend Engineer', 'https://www.lunarplex-fake.test/jobs/senior-frontend', 'Remote', NULL, NULL, NULL, 140000, 175000, 3, 3, '2025-03-05', '2025-03-06', '2025-03-09'),
+(2, 'Grovebit', 'Product Engineer', 'https://www.grovebit-fake.test/careers/product-engineer', 'New York', 'NY', 'Taylor Brooks', 'tbrooks@grovebit-fake.test', 125000, 155000, 2, 3, '2025-02-20', '2025-02-21', '2025-02-21'),
+(2, 'Nexloft', 'Staff Engineer', 'https://www.nexloft-fake.test/careers/staff-engineer', 'Remote', NULL, NULL, NULL, 160000, 200000, 5, 3, '2025-02-15', '2025-02-16', '2025-03-08'),
+(2, 'Driftmark', 'Full Stack Engineer', 'https://www.driftmark-fake.test/careers/full-stack', 'San Francisco', 'CA', 'Morgan Chen', 'morgan@driftmark-fake.test', 135000, 165000, 6, 3, '2025-02-10', '2025-02-12', '2025-03-07'),
+(2, 'Cobaltyne', 'Backend Engineer', 'https://www.cobaltyne-fake.test/careers/backend-engineer', 'San Francisco', 'CA', NULL, NULL, 120000, 150000, 8, 3, '2025-01-28', '2025-01-29', '2025-03-01'),
+(2, 'Veltura', 'DevOps Engineer', 'https://www.veltura-fake.test/jobs/devops', 'Austin', 'TX', NULL, NULL, 115000, 140000, 9, 3, '2025-01-15', '2025-01-16', '2025-02-28'),
+
+-- User 2 - suggestions and potentials
+(2, 'Orbfield', 'Senior Backend Engineer', 'https://www.orbfield-fake.test/careers/senior-backend', 'Remote', NULL, NULL, NULL, 130000, 160000, 1, 2, '2025-03-10', '2025-03-10', '2025-03-10'),
+(2, 'Patchwave', 'Platform Engineer', 'https://www.patchwave-fake.test/careers/platform-engineer', 'Remote', NULL, NULL, NULL, 125000, 155000, 1, 1, '2025-03-11', '2025-03-11', '2025-03-11'),
+(2, 'Ironveil', 'Infrastructure Engineer', 'https://www.ironveil-fake.test/careers', 'Remote', NULL, NULL, NULL, 110000, 140000, 1, 1, '2025-03-12', '2025-03-12', '2025-03-12'),
+
+-- User 1 (admin)
+(1, 'Synthetiq', 'ML Engineer', 'https://www.synthetiq-fake.test/careers/ml-engineer', 'San Francisco', 'CA', 'Alex Rivera', 'arivera@synthetiq-fake.test', 180000, 240000, 7, 3, '2025-01-10', '2025-01-11', '2025-02-20'),
+(1, 'Neuraloft', 'Research Engineer', 'https://www.neuraloft-fake.test/careers/research-engineer', 'San Francisco', 'CA', NULL, NULL, 200000, 275000, 4, 3, '2025-02-28', '2025-03-01', '2025-03-09'),
+(1, 'Mosaicly', 'Applied ML Engineer', 'https://www.mosaicly-fake.test/careers/applied-ml', 'Toronto', 'ON', NULL, NULL, 150000, 190000, 1, 2, '2025-03-08', '2025-03-08', '2025-03-08'),
 
 COMMIT;
