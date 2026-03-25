@@ -1,3 +1,7 @@
+import {
+    getJobOwner
+} from '../models/jobs/jobs.js';
+
 /**
  * Middleware to require authentication for protected routes.
  * Redirects to login page if user is not authenticated.
@@ -41,16 +45,28 @@ const requireRole = (roleName) => {
     };
 };
 
-const requireAdminOrOwner = (req, res, next) => {
+const requireAdminOrOwner = async (req, res, next) => {
     if (!req.session.user) {
         req.flash('error', 'You must be logged in');
         return res.redirect('/login');
     }
+    console.log('user info', req.session.user);
     const isAdmin = req.session.user.roleName === 'admin';
-    const isOwner = req.session.user.user_id === parseInt(req.params.id);
-    if (isAdmin || isOwner) {
-        return next();
+    if (isAdmin) return next();
+
+    try {
+        const jobOwner = await getJobOwner(req.params.id);
+        if (!jobOwner) {
+            req.flash('error', 'Job not found');
+            return res.redirect('/');
+        }
+
+        const isOwner = req.session.user.user_id === jobOwner;
+        if (isOwner) return next();
+    } catch (err) {
+        return next(err);
     }
+
     req.flash('error', 'You do not have permission to access this page');
     return res.redirect('/');
 };
