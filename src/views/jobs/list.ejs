@@ -25,9 +25,9 @@
                     <% if(job.city && job.state) { %>
                         &mdash; <%= job.city %>, <%= job.state %>
                     <% } else if(job.city) { %>
-                        <%= job.city %>
+                        &mdash; <%= job.city %>
                     <% } else if(job.state) { %>
-                        <%= job.state %>
+                        &mdash; <%= job.state %>
                     <% } %>
                 </p>
 
@@ -40,6 +40,12 @@
             <div class="border-top pt-2 d-flex justify-content-between align-items-center">
             <div class="row g-2" style="width: 420px;">
 
+                <div class="col-4"><p class="meta-label">Changed</p><p class="meta-value"><%= job.lastChanged %></p></div>
+
+                <% if(job.datePosted) { %>
+                    <div class="col-4"><p class="meta-label">Posted</p><p class="meta-value"><%= job.datePosted %></p></div>
+                <% } %>
+
                 <% if(job.minSalary && job.maxSalary) { %>
                     <div class="col-4"><p class="meta-label">Salary range</p><p class="meta-value">$<%= job.minSalary %> – $<%= job.maxSalary %></p></div>
                 <% } else if(job.minSalary) { %>
@@ -48,8 +54,6 @@
                     <div class="col-4"><p class="meta-label">Salary</p><p class="meta-value">$<%= job.maxSalary %></p></div>
                 <% } %>
 
-                <div class="col-4"><p class="meta-label">Posted</p><p class="meta-value"><%= job.datePosted %></p></div>
-                
                 <% if(job.contactName && job.contactEmail) { %>
                     <div class="col-4"><p class="meta-label">Contact</p><a href="mailto:<%= job.contactEmail %>" class="meta-value"><%= job.contactName %></a></div>
                 <% } else if(job.contactName) { %>

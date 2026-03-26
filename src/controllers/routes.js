@@ -92,8 +92,8 @@ router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidation, processRegistration);
 router.get('/register/list', showAllUsers);
 router.get('/registration/profile', requireLogin, showUser);
-router.get('/register/:id/edit', requireAdminOrOwner, showEditAccountForm);
-router.post('/register/:id/edit', requireAdminOrOwner, updateAccountValidation, processEditAccount);
+router.get('/register/:id/edit', requireLogin, showEditAccountForm);
+router.post('/register/:id/edit', requireLogin, updateAccountValidation, processEditAccount);
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes

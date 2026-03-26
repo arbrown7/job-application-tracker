@@ -1,31 +1,32 @@
 <%- include('../../partials/header') %>
-
-<main>
-    <h1><%= title %></h1>
-
-    <form method="POST" action="/register/<%= user.user_id %>/edit">
-        <div>
-            <label for="name">First name:</label>
-            <input type="text" id="firstName" name="firstName" value="<%= user.first_name %>" required>
+<!-- page styled with help from AI -->
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mb-4"><%= title %></h1>
+            <form method="POST" action="/register/<%= user.user_id %>/edit">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text" id="firstName" name="firstName" value="<%= user.first_name %>" required class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last name</label>
+                    <input type="text" id="lastName" name="lastName" value="<%= user.last_name %>" required class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>" required class="form-control">
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Update Account</button>
+                    <% if (isAdmin) { %>
+                        <a href="/register/list" class="btn btn-outline-secondary">Cancel</a>
+                    <% } else { %>
+                        <a href="/registration/profile" class="btn btn-outline-secondary">Cancel</a>
+                    <% } %>
+                </div>
+            </form>
         </div>
-        
-        <div>
-            <label for="name">Last name:</label>
-            <input type="text" id="lastName" name="lastName" value="<%= user.last_name %>" required>
-        </div>
-
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<%= user.email %>" required>
-        </div>
-        
-        <button type="submit">Update Account</button>
-        <% if (isAdmin) { %>
-            <a href="/register/list">Cancel</a>
-        <% } else {%>
-            <a href="/registration/profile">Cancel</a>
-        <% } %>
-    </form>
+    </div>
 </main>
-
 <%- include('../../partials/footer') %>
