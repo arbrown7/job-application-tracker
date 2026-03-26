@@ -50,7 +50,7 @@ const requireAdminOrOwner = async (req, res, next) => {
         req.flash('error', 'You must be logged in');
         return res.redirect('/login');
     }
-    console.log('user info', req.session.user);
+    
     const isAdmin = req.session.user.roleName === 'admin';
     if (isAdmin) return next();
 
@@ -61,7 +61,7 @@ const requireAdminOrOwner = async (req, res, next) => {
             return res.redirect('/');
         }
 
-        const isOwner = req.session.user.user_id === jobOwner;
+        const isOwner = req.session.user.user_id === jobOwner.owner_user_id;
         if (isOwner) return next();
     } catch (err) {
         return next(err);

@@ -60,7 +60,9 @@
             </div>
             <div class="d-flex gap-2">
                 <a href="/jobs/<%= job.id %>/edit" class="action-btn">Edit</a>
-                <a href="/jobs/<%= job.id %>/delete" class="action-btn danger">Delete</a>
+                <form action="/jobs/<%= job.id %>/delete" method="POST">
+                    <button type="submit" class="action-btn danger">Delete</button>
+                </form>
             </div>
             </div>
         </div>

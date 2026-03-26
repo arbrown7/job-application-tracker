@@ -6,7 +6,8 @@ import {
     getJobById, 
     getJobOwner,
     updateJob,
-    getAllJobStatuses
+    getAllJobStatuses,
+    deleteJob
 } from "../../models/jobs/jobs.js";
 
 /**
