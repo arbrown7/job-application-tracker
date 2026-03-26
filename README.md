@@ -11,7 +11,7 @@ Intended users include individuals actively searching for jobs who want a struct
 
 Below is the Entity Relationship Diagram (ERD) for the database.
 
-...insert image here...
+![Entity Relationship Diagram](/public/images/job_tracker_ERD.png)
 
 ---
 
