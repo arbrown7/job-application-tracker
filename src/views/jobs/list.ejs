@@ -1,17 +1,16 @@
 <%- include('../partials/dashboard/header') %>
 <div class="container" style="max-width: 860px; padding: 2rem 1.5rem;">
-    <!-- HTML file generated mainly with AI -->
+    <!-- HTML file styled mainly with AI -->
 
     <!-- Sort pills -->
     <div class="d-flex flex-wrap gap-2 mb-4 align-items-center">
       <span style="font-size:12px; color:#888; margin-right: 4px;">Sort by</span>
-      <a href="/jobs?sort=jobId" class="sort-btn <%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">ID</a>
-      <a href="/jobs?sort=title" class="sort-btn <%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">Title</a>
-      <a href="/jobs?sort=state" class="sort-btn <%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">State</a>
-      <a href="/jobs?sort=datePosted" class="sort-btn <%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date posted</a>
-      <a href="/jobs?sort=lastChanged" class="sort-btn <%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">Date changed</a>
-      <a href="/jobs?sort=status" class="sort-btn <%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">Status</a>
-      <a href="/jobs/?sort=title&type=<%= currentType || '' %>" class="sort-btn <%= currentSort === 'type' ? 'active' : '' %> text-decoration-none">Type</a>
+      <a href="/jobs?type=<%= currentType %>&sort=jobId" class="sort-btn <%= currentSort === 'jobId' ? 'active' : '' %> text-decoration-none">ID</a>
+      <a href="/jobs?type=<%= currentType %>&sort=title" class="sort-btn <%= currentSort === 'title' ? 'active' : '' %> text-decoration-none">Title</a>
+      <a href="/jobs?type=<%= currentType %>&sort=state" class="sort-btn <%= currentSort === 'state' ? 'active' : '' %> text-decoration-none">State</a>
+      <a href="/jobs?type=<%= currentType %>&sort=datePosted" class="sort-btn <%= currentSort === 'datePosted' ? 'active' : '' %> text-decoration-none">Date posted</a>
+      <a href="/jobs?type=<%= currentType %>&sort=lastChanged" class="sort-btn <%= currentSort === 'lastChanged' ? 'active' : '' %> text-decoration-none">Date changed</a>
+      <a href="/jobs?type=<%= currentType %>&sort=status" class="sort-btn <%= currentSort === 'status' ? 'active' : '' %> text-decoration-none">Status</a>
     </div>
 <% if (jobs && jobs.length> 0) { %>
     <div class="d-flex flex-column gap-3">
@@ -60,7 +59,6 @@
                 <% } %>
             </div>
             <div class="d-flex gap-2">
-                <a href="<%= job.url %>" class="action-btn">View</a>
                 <a href="/jobs/<%= job.id %>/edit" class="action-btn">Edit</a>
                 <a href="/jobs/<%= job.id %>/delete" class="action-btn danger">Delete</a>
             </div>

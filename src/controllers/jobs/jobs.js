@@ -98,6 +98,7 @@ const processNewJob = async (req, res) => {
 const showEditJobForm = async (req, res) => {
     const targetJobId = parseInt(req.params.id);
     const currentUser = req.session.user;
+    const currentType = null;
 
     const targetJob = await getJobById(targetJobId);
 
@@ -124,7 +125,8 @@ const showEditJobForm = async (req, res) => {
         },
         targetJobId: targetJobId,
         types: types,
-        statuses: statuses
+        statuses: statuses,
+        currentType: currentType
     });
 };
 
