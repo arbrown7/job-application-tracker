@@ -79,6 +79,7 @@ const showAllUsers = async (req, res) => {
         users = await getAllUsers();
     } catch (error) {
         console.error('Error retrieving users:', error);
+        return res.redirect('/');
     }
 
     res.render('forms/registration/list', {
@@ -99,6 +100,7 @@ const showUser = async (req, res) => {
         user = await getUserById(userId);
     } catch (error) {
         console.error('Error retrieving user', error);
+        return res.redirect('/register/list');
     }
 
     res.render('forms/registration/detail', {
@@ -116,24 +118,30 @@ const showEditAccountForm = async (req, res) => {
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
 
-    const targetUser = await getUserById(targetUserId);
+    try {
+        const targetUser = await getUserById(targetUserId);
 
-    if (!targetUser) {
-        req.flash('error', 'User not found.');
+        if (!targetUser) {
+            req.flash('error', 'User not found.');
+            return res.redirect('/register/list');
+        }
+
+        const canEdit = currentUser.user_id === targetUserId || currentUser.roleName === 'admin';
+
+        if (!canEdit) {
+            req.flash('error', 'You do not have permission to edit this account.');
+            return res.redirect('/register/list');
+        }
+
+        res.render('forms/registration/edit', {
+            title: 'Edit Account',
+            user: targetUser
+        });
+    } catch (error) {
+        console.error('Error editing user', error);
+        req.flash('error', 'Unable to edit user. Please try again later.');
         return res.redirect('/register/list');
     }
-
-    const canEdit = currentUser.user_id === targetUserId || currentUser.roleName === 'admin';
-
-    if (!canEdit) {
-        req.flash('error', 'You do not have permission to edit this account.');
-        return res.redirect('/register/list');
-    }
-
-    res.render('forms/registration/edit', {
-        title: 'Edit Account',
-        user: targetUser
-    });
 };
 
 /**

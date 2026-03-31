@@ -19,9 +19,7 @@ const showAdminPage = async (req, res) => {
 
     } catch (error) {
         console.error('Error loading admin page', error);
-        return res.status(500).render('errors/500', {
-            title: 'Server Error'
-        });
+        return res.redirect('/');
     }
 };
 

@@ -25,9 +25,8 @@ const showNewJobForm = async (req, res) => {
         });
     } catch (error) {
         console.error('Error loading job form:', error);
-        return res.status(500).render('errors/500', {
-            title: 'Server Error'
-        });
+        req.flash('error', 'Error loading job form. Please try again later.');
+        return res.redirect('/jobs');
     }
 };
 
@@ -41,14 +40,20 @@ const jobsPage = async (req, res) => {
     const sortBy = req.query.sort || 'lastChanged';
     const type = req.query.type || null;
 
-    const jobs = await getAllJobs(userId, sortBy, type);
-    
-    res.render('jobs/list', {
-        title: 'All Jobs',
-        jobs: jobs,
-        currentSort: sortBy,
-        currentType: type
-    });
+    try {
+        const jobs = await getAllJobs(userId, sortBy, type);
+
+        res.render('jobs/list', {
+            title: 'All Jobs',
+            jobs: jobs,
+            currentSort: sortBy,
+            currentType: type
+        });
+    } catch (error) {
+        console.error('Error loading jobs', error);
+        req.flash('error', 'Error loadings. Please try again later.');
+        return res.redirect('/');
+    }
 };
 
 /**
@@ -91,7 +96,7 @@ const processNewJob = async (req, res) => {
         return res.redirect('/jobs');
     } catch (error) {
         console.error('Error saving job', error);
-        req.flash('error', 'Unable to submit your message. Please try again later.');
+        req.flash('error', 'Unable to submit job. Please try again later.');
         return res.redirect('/jobs/new');
     }   
 };
@@ -110,28 +115,35 @@ const showEditJobForm = async (req, res) => {
         req.flash('error', 'Job not found.');
         return res.redirect('/jobs');
     }
-    
-    const targetJobOwner = await getJobOwner(targetJobId);
-    const canEdit = currentUser.user_id === targetJobOwner.owner_user_id;
-    let types = await getAllJobTypes();
-    let statuses = await getAllJobStatuses();
 
-    if (!canEdit) {
-        req.flash('error', 'You do not have permission to edit this job.');
+    try {
+        const targetJobOwner = await getJobOwner(targetJobId);
+        const canEdit = currentUser.user_id === targetJobOwner.owner_user_id;
+        let types = await getAllJobTypes();
+        let statuses = await getAllJobStatuses();
+
+        if (!canEdit) {
+            req.flash('error', 'You do not have permission to edit this job.');
+            return res.redirect('/jobs');
+        }
+
+        res.render('jobs/edit', {
+            title: 'Edit Job',
+            job: {
+                ...targetJob,
+                datePosted: targetJob.datePosted ? targetJob.datePosted.toISOString().split('T')[0] : ''
+            },
+            targetJobId: targetJobId,
+            types: types,
+            statuses: statuses,
+            currentType: currentType
+        });
+
+    } catch (error) {
+        console.error('Error opening job', error);
+        req.flash('error', 'Error opening job. Please try again later.');
         return res.redirect('/jobs');
     }
-
-    res.render('jobs/edit', {
-        title: 'Edit Job',
-        job: {
-            ...targetJob,
-            datePosted: targetJob.datePosted ? targetJob.datePosted.toISOString().split('T')[0] : ''
-        },
-        targetJobId: targetJobId,
-        types: types,
-        statuses: statuses,
-        currentType: currentType
-    });
 };
 
 /**
