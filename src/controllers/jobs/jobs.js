@@ -109,23 +109,15 @@ const showEditJobForm = async (req, res) => {
     const currentUser = req.session.user;
     const currentType = null;
 
-    const targetJob = await getJobById(targetJobId);
+    try {
+        const targetJob = await getJobById(targetJobId);
 
-    if (!targetJob) {
-        req.flash('error', 'Job not found.');
+        if (!targetJob) {
+            req.flash('error', 'Job not found.');
         return res.redirect('/jobs');
     }
-
-    try {
-        const targetJobOwner = await getJobOwner(targetJobId);
-        const canEdit = currentUser.user_id === targetJobOwner.owner_user_id;
         let types = await getAllJobTypes();
         let statuses = await getAllJobStatuses();
-
-        if (!canEdit) {
-            req.flash('error', 'You do not have permission to edit this job.');
-            return res.redirect('/jobs');
-        }
 
         res.render('jobs/edit', {
             title: 'Edit Job',
