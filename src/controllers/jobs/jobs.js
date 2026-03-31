@@ -7,7 +7,8 @@ import {
     getJobOwner,
     updateJob,
     getAllJobStatuses,
-    deleteJob
+    deleteJob,
+    updateJobType
 } from "../../models/jobs/jobs.js";
 
 /**
@@ -34,7 +35,9 @@ const showNewJobForm = async (req, res) => {
  * Display a list of all jobs
  */
 const jobsPage = async (req, res) => {
-    const userId = req.session.user.user_id;
+    //AI was used to help make this allow admins to see all jobs
+    const { user_id, roleName } = req.session.user;
+    const userId = roleName === 'admin' ? null : user_id;
     const sortBy = req.query.sort || 'lastChanged';
     const type = req.query.type || null;
 
@@ -213,11 +216,35 @@ const processDeleteJob = async (req, res) => {
     return res.redirect('/jobs');
 };
 
+/**
+ * Process job approval
+ */
+const processApproveJob = async (req, res) => {
+    const targetJobId = parseInt(req.params.id);
+    const typeId = 2; //potential
+
+    try {
+        const approved = await updateJobType(targetJobId, typeId);
+
+        if (approved) {
+            req.flash('success', 'Suggestion approved. You can now see it in Potential Jobs.');
+        } else {
+            req.flash('error', 'Suggestion not found.');
+        }
+    } catch (error) {
+        console.error('Error updating job:', error);
+        req.flash('error', 'An error occurred while updating job.');
+    }
+
+    return res.redirect('/jobs');
+};
+
 export { 
     jobsPage,
     showNewJobForm,
     processNewJob, 
     showEditJobForm,
     processEditJob,
-    processDeleteJob 
+    processDeleteJob,
+    processApproveJob 
 };

@@ -66,6 +66,7 @@ const getJobOwner = async (jobId) => {
 };
 
 const getAllJobs = async (userId, sortBy = 'lastChanged', type = null) => {
+    //AI was used to add update to allow admins to see all jobs
     const orderByClause =
         sortBy === 'title' ? 'j.title' :
         sortBy === 'state' ? 'j.state' :
@@ -74,16 +75,27 @@ const getAllJobs = async (userId, sortBy = 'lastChanged', type = null) => {
         sortBy === 'datePosted' ? 'j.posted_date' :
         'j.last_changed';
 
-    const params = [userId];
+    const params = [];
+    const conditions = [];
+
+    if (userId) {
+        params.push(userId);
+        conditions.push(`j.owner_user_id = $${params.length}`);
+    }
+
     let typeFilter = '';
+
     if (type) {
         params.push(type);
-        typeFilter = `AND jt.name = $2`;
+        conditions.push(`jt.name = $${params.length}`);
     }
+
+    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
     
     const query = `
         SELECT
             j.job_id,
+            j.owner_user_id,
             j.title,
             j.company,
             j.url,
@@ -102,14 +114,14 @@ const getAllJobs = async (userId, sortBy = 'lastChanged', type = null) => {
             ON j.status_id = js.status_id
         JOIN job_type jt
             ON j.type_id = jt.type_id
-        WHERE j.owner_user_id = $1
-        ${typeFilter}
+        ${whereClause}
         ORDER BY ${orderByClause};
     `;
     
     const result = await db.query(query, params);
    
     return result.rows.map(job => ({
+        ownerId: job.owner_user_id,
         id: job.job_id,
         title: job.title,
         company: job.company,
@@ -223,6 +235,12 @@ const getSuggestionId = async () => {
     };
 };
 
+const updateJobType = async (jobId, typeId) => {
+    const query = 'UPDATE jobs SET type_id = $1 WHERE jobs.job_id = $2';
+    const result = await db.query(query, [typeId, jobId]);
+    return result.rowCount > 0;
+};
+
 export {
     getAllJobStatuses, 
     getAllJobTypes, 
@@ -232,5 +250,6 @@ export {
     getJobOwner,
     updateJob,
     getSuggestionId,
-    deleteJob
+    deleteJob,
+    updateJobType
 };

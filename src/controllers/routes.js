@@ -36,6 +36,7 @@ import {
     showEditJobForm,
     processEditJob,
     processDeleteJob,
+    processApproveJob
 } from './jobs/jobs.js';
 import { 
     showSuggestionForm,
@@ -82,7 +83,7 @@ router.get('/login', showLoginForm);
 router.post('/login', loginValidation, processLogin);
 
 // Authentication-related routes
-router.get('/dashboard', requireRole('job_seeker'), showDashboard);
+router.get('/dashboard', requireRole('job_seeker', 'admin'), showDashboard);
 router.get('/logout', processLogout);
 router.get('/admin', requireRole('admin'), showAdminPage);
 router.post('/admin/:item/add', itemValidation, requireRole('admin'), processAddItem);
@@ -97,13 +98,14 @@ router.post('/register/:id/edit', requireLogin, updateAccountValidation, process
 router.post('/register/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Job routes
-router.get('/jobs', requireRole('job_seeker'), jobsPage);
-router.get('/jobs/new', requireRole('job_seeker'), showNewJobForm);
-router.post('/jobs/new', requireRole('job_seeker'), jobValidation, processNewJob);
-router.get('/jobs/suggestion', requireRole('supporter'), showSuggestionForm);
-router.post('/jobs/suggestion', requireRole('supporter'), suggestionValidation, processSuggestion);
-router.get('/jobs/:id/edit', requireRole('job_seeker'), showEditJobForm);
-router.post('/jobs/:id/edit', requireRole('job_seeker'), jobEditValidation, processEditJob);
+router.get('/jobs', requireRole('job_seeker', 'admin'), jobsPage);
+router.get('/jobs/new', requireRole('job_seeker', 'admin'), showNewJobForm);
+router.post('/jobs/new', requireRole('job_seeker', 'admin'), jobValidation, processNewJob);
+router.get('/jobs/suggestion', requireRole('supporter', 'admin'), showSuggestionForm);
+router.post('/jobs/suggestion', requireRole('supporter', 'admin'), suggestionValidation, processSuggestion);
+router.get('/jobs/:id/edit', requireRole('job_seeker', 'admin'), showEditJobForm);
+router.post('/jobs/:id/edit', requireRole('job_seeker', 'admin'), jobEditValidation, processEditJob);
 router.post('/jobs/:id/delete', requireAdminOrOwner, processDeleteJob);
+router.post('/jobs/:id/approve', requireAdminOrOwner, processApproveJob);
 
 export default router;
