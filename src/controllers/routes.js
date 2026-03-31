@@ -103,8 +103,8 @@ router.get('/jobs/new', requireRole('job_seeker', 'admin'), showNewJobForm);
 router.post('/jobs/new', requireRole('job_seeker', 'admin'), jobValidation, processNewJob);
 router.get('/jobs/suggestion', requireRole('supporter', 'admin'), showSuggestionForm);
 router.post('/jobs/suggestion', requireRole('supporter', 'admin'), suggestionValidation, processSuggestion);
-router.get('/jobs/:id/edit', requireRole('job_seeker', 'admin'), showEditJobForm);
-router.post('/jobs/:id/edit', requireRole('job_seeker', 'admin'), jobEditValidation, processEditJob);
+router.get('/jobs/:id/edit', requireAdminOrOwner, showEditJobForm);
+router.post('/jobs/:id/edit', requireAdminOrOwner, jobEditValidation, processEditJob);
 router.post('/jobs/:id/delete', requireAdminOrOwner, processDeleteJob);
 router.post('/jobs/:id/approve', requireAdminOrOwner, processApproveJob);
 
