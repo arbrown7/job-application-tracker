@@ -69,6 +69,7 @@ const registrationValidation = [
         .withMessage('Email address is too long'),
     body('emailConfirm')
         .trim()
+        .normalizeEmail()
         .custom((value, { req }) => value === req.body.email)
         .withMessage('Email addresses must match'),
     body('password')
