@@ -236,7 +236,7 @@ const getSuggestionId = async () => {
 };
 
 const updateJobType = async (jobId, typeId) => {
-    const query = 'UPDATE jobs SET type_id = $1 WHERE jobs.job_id = $2';
+    const query = 'UPDATE jobs SET type_id = $1, last_changed = CURRENT_TIMESTAMP WHERE jobs.job_id = $2';
     const result = await db.query(query, [typeId, jobId]);
     return result.rowCount > 0;
 };
