@@ -44,7 +44,8 @@ Use the following test accounts to log in.
 ---
 
 ## Known Limitations
-
+- Users cannot enter salaries with cents, only dollar amounts
+- 
 
 ---
 
