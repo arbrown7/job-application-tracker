@@ -50,8 +50,10 @@ import {
 const router = Router();
 
 // Add specific styles to home page
-router.use('/', (req, res, next) => {
-    res.addStyle('<link rel="stylesheet" href="/css/home.css">');
+router.use((req, res, next) => {
+    if (req.path === '/') {
+        res.addStyle('<link rel="stylesheet" href="/css/home.css">');
+    }
     next();
 });
 
